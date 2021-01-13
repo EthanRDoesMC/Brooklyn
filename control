@@ -1,0 +1,8 @@
+Package: chat.nova.brooklyn
+Name: Brooklyn
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: chat thing
+Maintainer: NovaChat
+Author: NovaChat
+Section: Messaging
