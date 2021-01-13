@@ -1,4 +1,4 @@
-#  Nova-iMessage-iOS a.k.a. Brooklyn
+#  imessage-api-ios a.k.a. Brooklyn
 iMessage API and runtime inspection tool for iOS
 
 ## Components
