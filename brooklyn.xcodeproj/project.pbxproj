@@ -76,6 +76,7 @@
 		4F8D117C25A56DEE00040303 /* SendMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageController.m; sourceTree = "<group>"; };
 		4F8D117F25A572C100040303 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		4F8D118025A572C100040303 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		4F91D09425AEEB6700385427 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +108,7 @@
 		4F70017E25993B7000698E5C = {
 			isa = PBXGroup;
 			children = (
+				4F91D09425AEEB6700385427 /* .gitignore */,
 				4F6808B725AEDFC700470DDB /* README.md */,
 				4F8D117125A5312400040303 /* SendMessageController.h */,
 				4F8D117C25A56DEE00040303 /* SendMessageController.m */,
