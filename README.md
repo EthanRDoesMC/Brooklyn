@@ -2,7 +2,6 @@
 iMessage API and runtime inspection tool for iOS
 
 ## Components
-----
 ### Rubicon
 > "The die is cast."
 
