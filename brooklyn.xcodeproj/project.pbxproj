@@ -11,6 +11,7 @@
 		4F6808B225AEDEE500470DDB /* ChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AE25AEDEE500470DDB /* ChatKit.framework */; };
 		4F6808B325AEDEE500470DDB /* IMFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AF25AEDEE500470DDB /* IMFoundation.framework */; };
 		4F6808B425AEDEE500470DDB /* MessageUI.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808B025AEDEE500470DDB /* MessageUI.tbd */; };
+		4F6808B925AEE04700470DDB /* rubicon in Resources */ = {isa = PBXBuildFile; fileRef = 4F6808B825AEE04700470DDB /* rubicon */; };
 		4F82108C25A034C1005B9453 /* xchighlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F82108A25A034C1005B9453 /* xchighlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70018825993B7000698E5C /* BLAppDelegate.m */; platformFilter = ios; };
 		4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */; platformFilter = ios; };
@@ -50,6 +51,8 @@
 		4F6808AE25AEDEE500470DDB /* ChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ChatKit.framework; sourceTree = "<group>"; };
 		4F6808AF25AEDEE500470DDB /* IMFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMFoundation.framework; sourceTree = "<group>"; };
 		4F6808B025AEDEE500470DDB /* MessageUI.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = MessageUI.tbd; sourceTree = "<group>"; };
+		4F6808B725AEDFC700470DDB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F6808B825AEE04700470DDB /* rubicon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = rubicon; sourceTree = "<group>"; };
 		4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLNewChatViewController.h; sourceTree = "<group>"; };
 		4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLNewChatViewController.m; sourceTree = "<group>"; };
 		4F70018425993B7000698E5C /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 		4F70017E25993B7000698E5C = {
 			isa = PBXGroup;
 			children = (
+				4F6808B725AEDFC700470DDB /* README.md */,
 				4F8D117125A5312400040303 /* SendMessageController.h */,
 				4F8D117C25A56DEE00040303 /* SendMessageController.m */,
 				4F8D117F25A572C100040303 /* ChatViewController.h */,
@@ -123,6 +127,7 @@
 				4F70018A25993B7000698E5C /* control */,
 				4F70018925993B7000698E5C /* main.m */,
 				4F70018525993B7000698E5C /* Makefile */,
+				4F6808B825AEE04700470DDB /* rubicon */,
 				4F70018625993B7000698E5C /* Resources */,
 				4F6808AC25AEDEE500470DDB /* Frameworks */,
 				4F82108925A034C1005B9453 /* xchighlight */,
@@ -243,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F6808B925AEE04700470DDB /* rubicon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

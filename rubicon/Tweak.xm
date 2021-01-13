@@ -1,6 +1,6 @@
-// Hackerman
-// Project Rubicon
-// Created by EthanRDoesMC for Nova Chat
+// Rubicon
+// The die is cast.
+// Created by EthanRDoesMC for NovaChat
 
 
 // Convince IMDaemon that all is good (we'll figure out security problems later)
