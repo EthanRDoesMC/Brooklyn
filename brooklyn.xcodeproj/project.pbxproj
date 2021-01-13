@@ -55,7 +55,6 @@
 		4F6808B825AEE04700470DDB /* rubicon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = rubicon; sourceTree = "<group>"; };
 		4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLNewChatViewController.h; sourceTree = "<group>"; };
 		4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLNewChatViewController.m; sourceTree = "<group>"; };
-		4F70018425993B7000698E5C /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
 		4F70018525993B7000698E5C /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		4F70018625993B7000698E5C /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		4F70018725993B7000698E5C /* BLRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLRootViewController.m; sourceTree = "<group>"; };
@@ -117,7 +116,6 @@
 				4F82105425A024C6005B9453 /* nibbuild.sh */,
 				4F7001992599756800698E5C /* IMCore.h */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
-				4F70018425993B7000698E5C /* .DS_Store */,
 				4F70018B25993B7000698E5C /* BLAppDelegate.h */,
 				4F70018825993B7000698E5C /* BLAppDelegate.m */,
 				4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */,
