@@ -39,7 +39,7 @@ Optional code highlighting, autocomplete, error checking:
 6. Run `make clean do`.
 
 #### Notes
-If you make changes to .xib files, make sure to commit the built .nib files in the Resources folder as well  That way, other platforms can build as well. This will not be a requirement in the future. 
+If you make changes to .xib files, make sure to commit the built .nib files in the Resources folder as well. That way, other platforms can build without Xcode. This will not be a requirement in the future. 
 
 ### Linux / Windows
 I'll add these instructions soon. I don't have theos set up on Windows. I also don't have a Linux install yet. For shame, I know, for shame! :P
