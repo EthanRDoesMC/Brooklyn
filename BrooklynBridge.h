@@ -11,11 +11,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface UIApplication (brooklyn)
+//an old secret of mine
+-(void)_setBackgroundStyle:(long long)arg1;
+@end
+
 @interface BrooklynBridge : NSObject
-@property (nonatomic, retain) NSArray * conversations;
 +(id)sharedBridge;
 + (BOOL)riseAndShineIMDaemon;
--(NSArray *)conversations;
++(NSArray *)conversationArray;
 @end
 
 NS_ASSUME_NONNULL_END

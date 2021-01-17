@@ -16,14 +16,14 @@
 		4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70018825993B7000698E5C /* BLAppDelegate.m */; platformFilter = ios; };
 		4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */; platformFilter = ios; };
 		4F82109A25A034CF005B9453 /* BLRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70018725993B7000698E5C /* BLRootViewController.m */; platformFilter = ios; };
-		4F82109B25A034CF005B9453 /* BrooklynBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70019125993D7400698E5C /* BrooklynBridge.m */; platformFilter = ios; };
+		4F82109B25A034CF005B9453 /* BrooklynBridge.xm in Sources */ = {isa = PBXBuildFile; fileRef = 4F70019125993D7400698E5C /* BrooklynBridge.xm */; platformFilter = ios; };
 		4F8210AC25A035F8005B9453 /* IMCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F7001992599756800698E5C /* IMCore.h */; platformFilter = ios; };
 		4F8210AD25A035F8005B9453 /* ChatKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F70019A2599A13E00698E5C /* ChatKit.h */; platformFilter = ios; };
 		4F8210AE25A035F8005B9453 /* BLAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F70018B25993B7000698E5C /* BLAppDelegate.h */; platformFilter = ios; };
 		4F8210AF25A035F8005B9453 /* BLNewChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */; platformFilter = ios; };
 		4F8210B025A035F8005B9453 /* BLRootViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F70018C25993B7000698E5C /* BLRootViewController.h */; platformFilter = ios; };
 		4F8210B125A035F8005B9453 /* BrooklynBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F70019025993D7400698E5C /* BrooklynBridge.h */; platformFilter = ios; };
-		4F8210D025A03843005B9453 /* BrooklynBridge.m in Headers */ = {isa = PBXBuildFile; fileRef = 4F70019125993D7400698E5C /* BrooklynBridge.m */; platformFilter = ios; };
+		4F8210D025A03843005B9453 /* BrooklynBridge.xm in Headers */ = {isa = PBXBuildFile; fileRef = 4F70019125993D7400698E5C /* BrooklynBridge.xm */; platformFilter = ios; };
 		4F8D117625A5314600040303 /* SendMessageController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D117125A5312400040303 /* SendMessageController.h */; platformFilter = ios; };
 		4F8D117D25A56DEE00040303 /* SendMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D117C25A56DEE00040303 /* SendMessageController.m */; platformFilter = ios; };
 		4F8D118125A572C100040303 /* ChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D117F25A572C100040303 /* ChatViewController.h */; platformFilter = ios; };
@@ -64,7 +64,7 @@
 		4F70018B25993B7000698E5C /* BLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLAppDelegate.h; sourceTree = "<group>"; };
 		4F70018C25993B7000698E5C /* BLRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLRootViewController.h; sourceTree = "<group>"; };
 		4F70019025993D7400698E5C /* BrooklynBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrooklynBridge.h; sourceTree = "<group>"; };
-		4F70019125993D7400698E5C /* BrooklynBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrooklynBridge.m; sourceTree = "<group>"; };
+		4F70019125993D7400698E5C /* BrooklynBridge.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = BrooklynBridge.xm; sourceTree = "<group>"; };
 		4F7001992599756800698E5C /* IMCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCore.h; sourceTree = "<group>"; };
 		4F70019A2599A13E00698E5C /* ChatKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatKit.h; sourceTree = "<group>"; };
 		4F82105425A024C6005B9453 /* nibbuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = nibbuild.sh; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 				4F70018C25993B7000698E5C /* BLRootViewController.h */,
 				4F70018725993B7000698E5C /* BLRootViewController.m */,
 				4F70019025993D7400698E5C /* BrooklynBridge.h */,
-				4F70019125993D7400698E5C /* BrooklynBridge.m */,
+				4F70019125993D7400698E5C /* BrooklynBridge.xm */,
 				4F70018A25993B7000698E5C /* control */,
 				4F70018925993B7000698E5C /* main.m */,
 				4F70018525993B7000698E5C /* Makefile */,
@@ -161,7 +161,7 @@
 			files = (
 				4F82108C25A034C1005B9453 /* xchighlight.h in Headers */,
 				4F8D117625A5314600040303 /* SendMessageController.h in Headers */,
-				4F8210D025A03843005B9453 /* BrooklynBridge.m in Headers */,
+				4F8210D025A03843005B9453 /* BrooklynBridge.xm in Headers */,
 				4F8210AC25A035F8005B9453 /* IMCore.h in Headers */,
 				4F8210AD25A035F8005B9453 /* ChatKit.h in Headers */,
 				4F8210AE25A035F8005B9453 /* BLAppDelegate.h in Headers */,
@@ -260,7 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F8D117D25A56DEE00040303 /* SendMessageController.m in Sources */,
-				4F82109B25A034CF005B9453 /* BrooklynBridge.m in Sources */,
+				4F82109B25A034CF005B9453 /* BrooklynBridge.xm in Sources */,
 				4F8D118225A572C100040303 /* ChatViewController.m in Sources */,
 				4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */,
 				4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */,
