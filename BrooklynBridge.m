@@ -24,13 +24,16 @@
     return [controller connectToDaemon];
 }
 
-+(NSArray *)conversationArray {
+-(NSArray *)conversations {
+    if (!self.conversations) {
     [BrooklynBridge riseAndShineIMDaemon];
-    NSMutableArray *returnArray = [NSMutableArray new];
-    for (IMChat * c in [[IMChatRegistry sharedInstance] allExistingChats]) {
-        [returnArray addObject:[[CKConversation alloc] initWithChat:c]];
+    self.conversations = [NSMutableArray new];
     }
-    // NOT GOOD. CREATES A BUNCH'A OBJECTS.
+    for (IMChat * c in [[IMChatRegistry sharedInstance] allExistingChats]) {
+        //if ([[self.conversations containsObject:])
+        // finish writing this
+        [self.conversations addObject:[[CKConversation alloc] initWithChat:c]];
+    }
     return returnArray;
 }
 @end

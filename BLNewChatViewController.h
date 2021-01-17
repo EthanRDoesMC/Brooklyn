@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface UIApplication (brooklyn)
+//an old secret of mine
+-(void)_setBackgroundStyle:(long long)arg1;
+@end
+
 @interface BLNewChatViewController : UIViewController <UITextFieldDelegate>
 -(void)doAThing:(NSString *)tf;
 @end
