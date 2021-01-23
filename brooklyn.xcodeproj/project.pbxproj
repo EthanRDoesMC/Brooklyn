@@ -71,6 +71,7 @@
 		4F82108825A034C1005B9453 /* xchighlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xchighlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F82108A25A034C1005B9453 /* xchighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xchighlight.h; sourceTree = "<group>"; };
 		4F82108B25A034C1005B9453 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F847F3925B524FF00E00E4F /* ent.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ent.plist; sourceTree = "<group>"; };
 		4F8D117125A5312400040303 /* SendMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendMessageController.h; sourceTree = "<group>"; };
 		4F8D117C25A56DEE00040303 /* SendMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageController.m; sourceTree = "<group>"; };
 		4F8D117F25A572C100040303 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 				4F8D118025A572C100040303 /* ChatViewController.m */,
 				4F82105425A024C6005B9453 /* nibbuild.sh */,
 				4F7001992599756800698E5C /* IMCore.h */,
+				4F847F3925B524FF00E00E4F /* ent.plist */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
 				4F70018B25993B7000698E5C /* BLAppDelegate.h */,
 				4F70018825993B7000698E5C /* BLAppDelegate.m */,
@@ -316,7 +318,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = iPod.local;
+				THEOS_DEVICE_IP = iPhone.local;
 			};
 			name = Debug;
 		};
@@ -331,7 +333,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = iPod.local;
+				THEOS_DEVICE_IP = iPhone.local;
 			};
 			name = Release;
 		};

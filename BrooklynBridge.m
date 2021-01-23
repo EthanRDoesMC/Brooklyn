@@ -33,6 +33,8 @@
     // NOT GOOD. CREATES A BUNCH'A OBJECTS.
     return returnArray;
 }
+// soon
+//-(id)sendMessage:(IMMessage *)message toChat:(IMChat *)chat
 @end
 
 

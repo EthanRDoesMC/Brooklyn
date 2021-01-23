@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface BrooklynBridge : NSObject
+@property (nonatomic, assign) CKConversationList * conversationList;
 +(id)sharedBridge;
 + (BOOL)riseAndShineIMDaemon;
 +(NSArray *)conversationArray;
