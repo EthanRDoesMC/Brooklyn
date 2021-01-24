@@ -7,6 +7,10 @@
 
 #import "BrooklynBridge.h"
 
+@interface BrooklynBridge ()
+@property (nonatomic, strong) AVAudioPlayer * loadingPlayer;
+@end
+
 @implementation BrooklynBridge
 
 + (instancetype)sharedBridge {
@@ -33,6 +37,20 @@
     // NOT GOOD. CREATES A BUNCH'A OBJECTS.
     return returnArray;
 }
+
+-(void)playLoadingChime {
+    if (!self.loadingPlayer) {
+        _loadingPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"loadingChime" ofType:@"aiff"]] error:nil];
+        _loadingPlayer.numberOfLoops = -1;
+    }
+    [_loadingPlayer play];
+}
+
+-(void)stopLoadingChime {
+    [_loadingPlayer stop];
+    [_loadingPlayer setCurrentTime:0];
+}
+
 // soon
 //-(id)sendMessage:(IMMessage *)message toChat:(IMChat *)chat
 @end

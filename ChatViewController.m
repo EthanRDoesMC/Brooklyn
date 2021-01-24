@@ -110,11 +110,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [[BrooklynBridge sharedBridge] playLoadingChime];
     CKTranscriptController * tc = [[CKTranscriptController alloc] init];
     [tc setConversation:self.chat];
-    [self.chat.chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:NO];
+    [self.chat.chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:YES];
     
-    [self presentViewController:tc animated:YES completion:nil];
+    [self.navigationController pushViewController:tc animated:YES];
+    [[BrooklynBridge sharedBridge] stopLoadingChime];
 }
 
 @end

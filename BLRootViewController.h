@@ -5,5 +5,7 @@
 #import "BLNewChatViewController.h"
 
 @interface BLRootViewController : UITableViewController
+-(void)reloadChats;
+
 
 @end

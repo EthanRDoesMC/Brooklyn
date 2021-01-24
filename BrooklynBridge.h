@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "IMCore.h"
 #import "ChatKit.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,9 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrooklynBridge : NSObject
 @property (nonatomic, assign) CKConversationList * conversationList;
+
 +(id)sharedBridge;
 + (BOOL)riseAndShineIMDaemon;
 +(NSArray *)conversationArray;
+-(void)playLoadingChime;
+-(void)stopLoadingChime;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ChatKit.h"
+#import "BrooklynBridge.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

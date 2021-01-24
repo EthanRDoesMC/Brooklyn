@@ -183,7 +183,7 @@
 			buildConfigurationList = 4F70018D25993B7000698E5C /* Build configuration list for PBXLegacyTarget "brooklyn" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/bin/make;
+			buildToolPath = /usr/local/opt/make/libexec/gnubin/make;
 			buildWorkingDirectory = /Users/ethanrdoesmc/Developer/NovaChat/Brooklyn/brooklyn;
 			dependencies = (
 			);
@@ -280,12 +280,14 @@
 					armv7,
 					arm64,
 				);
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos8.3;
+				SYMROOT = build;
 			};
 			name = Debug;
 		};
@@ -296,11 +298,13 @@
 					armv7,
 					arm64,
 				);
+				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				SDKROOT = iphoneos8.3;
+				SYMROOT = build;
 			};
 			name = Release;
 		};
@@ -318,7 +322,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = SEG.local;
+				THEOS_DEVICE_IP = iPhone.local;
 			};
 			name = Debug;
 		};
@@ -333,7 +337,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = SEG.local;
+				THEOS_DEVICE_IP = iPhone.local;
 			};
 			name = Release;
 		};

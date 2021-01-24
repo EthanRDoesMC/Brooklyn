@@ -49,7 +49,7 @@
     
     [self.chat.chat sendMessage:[self.chat messageWithComposition:composition]];
     [textField resignFirstResponder];
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     return YES;
 }
 
