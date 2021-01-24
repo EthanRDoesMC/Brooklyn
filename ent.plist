@@ -36,5 +36,11 @@
 	<true/>
 	<key>com.apple.private.security.no-container</key>
 	<true/>
+	<key>com.apple.private.corerecents</key>
+	<true/>
+	<key>com.apple.private.communicationsfilter</key>
+	<true/>
+	<key>com.apple.private.ids.idquery-cache</key>
+	<true/>
 </dict>
 </plist>

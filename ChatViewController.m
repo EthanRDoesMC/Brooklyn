@@ -17,7 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
-    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    UIBlurEffect * be = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView * vev = [[UIVisualEffectView alloc] initWithEffect:be];
+    self.tableView.backgroundView = vev;
+    self.tableView.separatorEffect = [UIVibrancyEffect effectForBlurEffect:be]; 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

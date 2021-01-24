@@ -2,6 +2,7 @@ export THEOS = /Users/ethanrdoesmc/theos
 TARGET := iphone:clang:latest:8.0
 INSTALL_TARGET_PROCESSES = Brooklyn imagent SpringBoard MobileSMS
 include $(THEOS)/makefiles/common.mk
+ARCHS = armv7 arm64
 
 APPLICATION_NAME = Brooklyn
 

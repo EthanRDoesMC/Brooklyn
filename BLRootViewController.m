@@ -17,6 +17,9 @@
 	self.title = @"Brooklyn";
 	self.navigationItem.leftBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    [[UIApplication sharedApplication] _setBackgroundStyle:1];
     [self.tableView reloadData];
 //    [self.tableView setBackgroundColor:[UIColor clearColor]];
 //    []
@@ -24,6 +27,11 @@
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    UIBlurEffect * be = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView * vev = [[UIVisualEffectView alloc] initWithEffect:be];
+    self.tableView.backgroundView = vev;
+    self.tableView.separatorEffect = [UIVibrancyEffect effectForBlurEffect:be];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView reloadData];
@@ -46,8 +54,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    [BrooklynBridge conversationArray];
-	return [BrooklynBridge conversationArray].count;
+    return [[IMChatRegistry sharedInstance] numberOfExistingChats];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,7 +73,9 @@
     } else {
         cell.detailTextLabel.textColor = [UIColor colorWithRed: 0.26 green: 0.80 blue: 0.28 alpha: 1.00];
     }
+    cell.textLabel.textColor = [UIColor whiteColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.backgroundColor = [UIColor clearColor];
 	return cell;
 }
 

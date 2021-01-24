@@ -318,7 +318,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = iPhone.local;
+				THEOS_DEVICE_IP = SEG.local;
 			};
 			name = Debug;
 		};
@@ -333,7 +333,7 @@
 				PRODUCT_NAME = brooklyn;
 				SDKROOT = iphoneos;
 				THEOS = /Users/ethanrdoesmc/theos;
-				THEOS_DEVICE_IP = iPhone.local;
+				THEOS_DEVICE_IP = SEG.local;
 			};
 			name = Release;
 		};
