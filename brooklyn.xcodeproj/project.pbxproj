@@ -108,32 +108,11 @@
 		4F70017E25993B7000698E5C = {
 			isa = PBXGroup;
 			children = (
-				4F91D09425AEEB6700385427 /* .gitignore */,
 				4F6808B725AEDFC700470DDB /* README.md */,
-				4F8D117125A5312400040303 /* SendMessageController.h */,
-				4F8D117C25A56DEE00040303 /* SendMessageController.m */,
-				4F8D117F25A572C100040303 /* ChatViewController.h */,
-				4F8D118025A572C100040303 /* ChatViewController.m */,
-				4F82105425A024C6005B9453 /* nibbuild.sh */,
-				4F7001992599756800698E5C /* IMCore.h */,
-				4F847F3925B524FF00E00E4F /* ent.plist */,
-				4F70019A2599A13E00698E5C /* ChatKit.h */,
-				4F70018B25993B7000698E5C /* BLAppDelegate.h */,
-				4F70018825993B7000698E5C /* BLAppDelegate.m */,
-				4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */,
-				4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */,
-				4F70018C25993B7000698E5C /* BLRootViewController.h */,
-				4F70018725993B7000698E5C /* BLRootViewController.m */,
-				4F70019025993D7400698E5C /* BrooklynBridge.h */,
-				4F70019125993D7400698E5C /* BrooklynBridge.m */,
-				4F70018A25993B7000698E5C /* control */,
-				4F70018925993B7000698E5C /* main.m */,
-				4F70018525993B7000698E5C /* Makefile */,
-				4F6808B825AEE04700470DDB /* rubicon */,
-				4F70018625993B7000698E5C /* Resources */,
-				4F6808AC25AEDEE500470DDB /* Frameworks */,
-				4F82108925A034C1005B9453 /* xchighlight */,
-				4F82105F25A031B9005B9453 /* Products */,
+				4FAB0ABB25D64376007448DA /* Headers */,
+				4FAB0AB125D64192007448DA /* Application */,
+				4FAB0ABA25D6431C007448DA /* Utilities */,
+				4FAB0ABC25D643CB007448DA /* Bridge to iMessage */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +131,107 @@
 				4F82108B25A034C1005B9453 /* Info.plist */,
 			);
 			path = xchighlight;
+			sourceTree = "<group>";
+		};
+		4FAB0AB125D64192007448DA /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4FAB0AB525D6422C007448DA /* Message Inspector */,
+				4FAB0AB725D6428E007448DA /* Chat List */,
+				4FAB0AB825D642AC007448DA /* Message Sender */,
+				4FAB0AB425D64211007448DA /* Chat Creator */,
+				4FAB0AB925D642D5007448DA /* Delegate */,
+				4F70018925993B7000698E5C /* main.m */,
+				4F70018625993B7000698E5C /* Resources */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		4FAB0AB425D64211007448DA /* Chat Creator */ = {
+			isa = PBXGroup;
+			children = (
+				4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */,
+				4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */,
+			);
+			name = "Chat Creator";
+			sourceTree = "<group>";
+		};
+		4FAB0AB525D6422C007448DA /* Message Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				4F8D117F25A572C100040303 /* ChatViewController.h */,
+				4F8D118025A572C100040303 /* ChatViewController.m */,
+			);
+			name = "Message Inspector";
+			sourceTree = "<group>";
+		};
+		4FAB0AB725D6428E007448DA /* Chat List */ = {
+			isa = PBXGroup;
+			children = (
+				4F70018C25993B7000698E5C /* BLRootViewController.h */,
+				4F70018725993B7000698E5C /* BLRootViewController.m */,
+			);
+			name = "Chat List";
+			sourceTree = "<group>";
+		};
+		4FAB0AB825D642AC007448DA /* Message Sender */ = {
+			isa = PBXGroup;
+			children = (
+				4F8D117125A5312400040303 /* SendMessageController.h */,
+				4F8D117C25A56DEE00040303 /* SendMessageController.m */,
+			);
+			name = "Message Sender";
+			sourceTree = "<group>";
+		};
+		4FAB0AB925D642D5007448DA /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				4F70018B25993B7000698E5C /* BLAppDelegate.h */,
+				4F70018825993B7000698E5C /* BLAppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		4FAB0ABA25D6431C007448DA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4F91D09425AEEB6700385427 /* .gitignore */,
+				4F82105425A024C6005B9453 /* nibbuild.sh */,
+				4F70018525993B7000698E5C /* Makefile */,
+				4F70018A25993B7000698E5C /* control */,
+				4F847F3925B524FF00E00E4F /* ent.plist */,
+				4FAB0ABF25D64446007448DA /* Xcode Highlighting */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		4FAB0ABB25D64376007448DA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4F7001992599756800698E5C /* IMCore.h */,
+				4F70019A2599A13E00698E5C /* ChatKit.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		4FAB0ABC25D643CB007448DA /* Bridge to iMessage */ = {
+			isa = PBXGroup;
+			children = (
+				4F70019025993D7400698E5C /* BrooklynBridge.h */,
+				4F70019125993D7400698E5C /* BrooklynBridge.m */,
+				4F6808B825AEE04700470DDB /* rubicon */,
+			);
+			name = "Bridge to iMessage";
+			sourceTree = "<group>";
+		};
+		4FAB0ABF25D64446007448DA /* Xcode Highlighting */ = {
+			isa = PBXGroup;
+			children = (
+				4F82105F25A031B9005B9453 /* Products */,
+				4F6808AC25AEDEE500470DDB /* Frameworks */,
+				4F82108925A034C1005B9453 /* xchighlight */,
+			);
+			name = "Xcode Highlighting";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
