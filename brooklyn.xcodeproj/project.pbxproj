@@ -72,6 +72,7 @@
 		4F82108A25A034C1005B9453 /* xchighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xchighlight.h; sourceTree = "<group>"; };
 		4F82108B25A034C1005B9453 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F847F3925B524FF00E00E4F /* ent.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ent.plist; sourceTree = "<group>"; };
+		4F8BE07D25D85C4C00A66686 /* setuptheos.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setuptheos.sh; sourceTree = "<group>"; };
 		4F8D117125A5312400040303 /* SendMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendMessageController.h; sourceTree = "<group>"; };
 		4F8D117C25A56DEE00040303 /* SendMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendMessageController.m; sourceTree = "<group>"; };
 		4F8D117F25A572C100040303 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -201,6 +202,7 @@
 				4F70018A25993B7000698E5C /* control */,
 				4F847F3925B524FF00E00E4F /* ent.plist */,
 				4FAB0ABF25D64446007448DA /* Xcode Highlighting */,
+				4F8BE07D25D85C4C00A66686 /* setuptheos.sh */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
