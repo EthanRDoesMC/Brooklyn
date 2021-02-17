@@ -106,9 +106,9 @@ unzip master.zip -d $TMP
 mv $TMP/sdks-master/*.sdk $THEOS/sdks
 rm -r master.zip $TMP
 fi
-curl -LO https://github.com/EthanRDoesMC/sdks/archive/master.zip
+curl -LO https://github.com/EthanRDoesMC/sdks/archive/main.zip
 TMP=$(mktemp -d)
-unzip master.zip -d $TMP
-mv $TMP/sdks-master/*.sdk $THEOS/sdks
-rm -r master.zip $TMP
+unzip main.zip -d $TMP
+mv $TMP/sdks-main/*.sdk $THEOS/sdks
+rm -r main.zip $TMP
 fi
