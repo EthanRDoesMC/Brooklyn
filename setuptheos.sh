@@ -22,10 +22,6 @@ while [[ "$#" > 0 ]]; do case $1 in
   *) usage "Unknown parameter passed: $1"; shift; shift;;
 esac; done
 
-# verify params
-#if [ -z "$NUMBER_OF_PEOPLE" ]; then usage "Number of people is not set"; fi;
-#if [ -z "$SECTION_ID" ]; then usage "Section id is not set."; fi;
-
 printf "
      \e[38;5;208m____\e[39m
     \e[38;5;202m/ __ ) __  ___  ____  ___  _____\e[39m
@@ -61,7 +57,7 @@ if [ "$PLATFORM_NAME" = "Linux" ] || [ "$PLATFORM_NAME" = "WSL" ]; then
 if [ -z "$THEOS" ]; then
 echo "Preparing installation for Linux..."
 echo "Downloading LLVM..."
-sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh"
+sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 echo "Updating apt..."
 sudo apt-get update
 echo "Installing build-related packages..."
@@ -72,16 +68,25 @@ sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp
 fi
 echo "Adding THEOS to your shell..."
 echo "export THEOS=~/theos" >> ~/.profile
-exec $SHELL
-echo $THEOS
+THEOS=~/theos
 git clone --recursive https://github.com/theos/theos.git $THEOS
 curl https://kabiroberai.com/toolchain/download.php?toolchain=ios-linux -Lo toolchain.tar.gz
 tar xzf toolchain.tar.gz -C $THEOS/toolchain
 rm toolchain.tar.gz
+curl -LO https://github.com/theos/sdks/archive/master.zip
+TMP=$(mktemp -d)
+unzip master.zip -d $TMP
+mv $TMP/sdks-master/*.sdk $THEOS/sdks
+rm -r master.zip $TMP
 fi
+curl -LO https://github.com/EthanRDoesMC/sdks/archive/master.zip
+TMP=$(mktemp -d)
+unzip master.zip -d $TMP
+mv $TMP/sdks-master/*.sdk $THEOS/sdks
+rm -r master.zip $TMP
 fi
 
-if [ "$PLATFORM_NAME" = "macOS" ] then
+if [ "$PLATFORM_NAME" = "macOS" ]; then
 echo "Ensure Xcode is installed. Seriously."
 if [ -z "$THEOS" ]; then
 which -s brew
@@ -94,8 +99,7 @@ fi
 brew install ldid xz
 echo "export THEOS=~/theos" >> ~/.profile
 echo "export THEOS=~/theos" >> ~/.zprofile
-exec $SHELL
-echo $THEOS
+THEOS=~/theos
 curl -LO https://github.com/theos/sdks/archive/master.zip
 TMP=$(mktemp -d)
 unzip master.zip -d $TMP
