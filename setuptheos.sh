@@ -61,7 +61,7 @@ sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 echo "Updating apt..."
 sudo apt-get update
 echo "Installing build-related packages..."
-sudo apt-get install fakeroot git perl clang-6.0 build-essential
+sudo apt-get install fakeroot git perl clang-6.0 build-essential unzip zip
 if [ "$PLATFORM_NAME" = "WSL" ]; then
 echo "Setting WSL flag for fakeroot..."
 sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp
