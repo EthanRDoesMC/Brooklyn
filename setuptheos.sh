@@ -61,7 +61,7 @@ sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 echo "Updating apt..."
 sudo apt-get update
 echo "Installing build-related packages..."
-sudo apt-get install fakeroot git perl clang-6.0 build-essential unzip zip
+sudo apt-get install fakeroot git perl clang build-essential unzip zip libtinfo5
 if [ "$PLATFORM_NAME" = "WSL" ]; then
 echo "Setting WSL flag for fakeroot..."
 sudo update-alternatives --set fakeroot /usr/bin/fakeroot-tcp
@@ -70,9 +70,12 @@ echo "Adding THEOS to your shell..."
 echo "export THEOS=~/theos" >> ~/.profile
 THEOS=~/theos
 git clone --recursive https://github.com/theos/theos.git $THEOS
-curl https://kabiroberai.com/toolchain/download.php?toolchain=ios-linux -Lo toolchain.tar.gz
-tar xzf toolchain.tar.gz -C $THEOS/toolchain
-rm toolchain.tar.gz
+curl -LO https://github.com/sbingner/llvm-project/releases/download/v10.0.0-1/linux-ios-arm64e-clang-toolchain.tar.lzma
+TMP=$(mktemp -d)
+tar --lzma -xvf linux-ios-arm64e-clang-toolchain.tar.lzma -C $TMP
+mkdir -p $THEOS/toolchain/linux/iphone
+mv $TMP/ios-arm64e-clang-toolchain/* $THEOS/toolchain/linux/iphone/
+rm -r $TMP linux-ios-arm64e-clang-toolchain.tar.lzma
 curl -LO https://github.com/theos/sdks/archive/master.zip
 TMP=$(mktemp -d)
 unzip master.zip -d $TMP
