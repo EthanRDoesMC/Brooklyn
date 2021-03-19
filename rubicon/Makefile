@@ -1,4 +1,4 @@
-TARGET := iphone:clang:8.4:7.0
+TARGET := iphone:clang:latest:7.0
 INSTALL_TARGET_PROCESSES = Brooklyn imagent SpringBoard
 ARCH = armv7 arm64
 

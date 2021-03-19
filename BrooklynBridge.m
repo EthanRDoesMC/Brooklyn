@@ -51,8 +51,8 @@
     [_loadingPlayer setCurrentTime:0];
 }
 
-// soon
-//-(id)sendMessage:(IMMessage *)message toChat:(IMChat *)chat
+#pragma mark - Message Sending
+
 @end
 
 

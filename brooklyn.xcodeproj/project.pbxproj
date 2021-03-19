@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F48376A25F20FE0001B9415 /* MessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F48376825F20FE0001B9415 /* MessageBuilder.h */; };
+		4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F48376925F20FE0001B9415 /* MessageBuilder.m */; };
 		4F6808B125AEDEE500470DDB /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AD25AEDEE500470DDB /* IMCore.framework */; };
 		4F6808B225AEDEE500470DDB /* ChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AE25AEDEE500470DDB /* ChatKit.framework */; };
 		4F6808B325AEDEE500470DDB /* IMFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AF25AEDEE500470DDB /* IMFoundation.framework */; };
@@ -28,6 +30,9 @@
 		4F8D117D25A56DEE00040303 /* SendMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D117C25A56DEE00040303 /* SendMessageController.m */; platformFilter = ios; };
 		4F8D118125A572C100040303 /* ChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D117F25A572C100040303 /* ChatViewController.h */; platformFilter = ios; };
 		4F8D118225A572C100040303 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D118025A572C100040303 /* ChatViewController.m */; platformFilter = ios; };
+		4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D49362604612E00A2BE48 /* LogViewController.h */; };
+		4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D49372604612E00A2BE48 /* LogViewController.m */; };
+		4F9D49452604727F00A2BE48 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D493D2604682500A2BE48 /* NSTask.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -47,6 +52,8 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
+		4F48376825F20FE0001B9415 /* MessageBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBuilder.h; sourceTree = "<group>"; };
+		4F48376925F20FE0001B9415 /* MessageBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBuilder.m; sourceTree = "<group>"; };
 		4F6808AD25AEDEE500470DDB /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMCore.framework; sourceTree = "<group>"; };
 		4F6808AE25AEDEE500470DDB /* ChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ChatKit.framework; sourceTree = "<group>"; };
 		4F6808AF25AEDEE500470DDB /* IMFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMFoundation.framework; sourceTree = "<group>"; };
@@ -78,6 +85,9 @@
 		4F8D117F25A572C100040303 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		4F8D118025A572C100040303 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		4F91D09425AEEB6700385427 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4F9D49362604612E00A2BE48 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
+		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
+		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +172,8 @@
 			children = (
 				4F8D117F25A572C100040303 /* ChatViewController.h */,
 				4F8D118025A572C100040303 /* ChatViewController.m */,
+				4F9D49362604612E00A2BE48 /* LogViewController.h */,
+				4F9D49372604612E00A2BE48 /* LogViewController.m */,
 			);
 			name = "Message Inspector";
 			sourceTree = "<group>";
@@ -211,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				4F7001992599756800698E5C /* IMCore.h */,
+				4F9D493D2604682500A2BE48 /* NSTask.h */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
 			);
 			name = Headers;
@@ -221,6 +234,8 @@
 			children = (
 				4F70019025993D7400698E5C /* BrooklynBridge.h */,
 				4F70019125993D7400698E5C /* BrooklynBridge.m */,
+				4F48376825F20FE0001B9415 /* MessageBuilder.h */,
+				4F48376925F20FE0001B9415 /* MessageBuilder.m */,
 				4F6808B825AEE04700470DDB /* rubicon */,
 			);
 			name = "Bridge to iMessage";
@@ -244,7 +259,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F82108C25A034C1005B9453 /* xchighlight.h in Headers */,
+				4F9D49452604727F00A2BE48 /* NSTask.h in Headers */,
 				4F8D117625A5314600040303 /* SendMessageController.h in Headers */,
+				4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */,
+				4F48376A25F20FE0001B9415 /* MessageBuilder.h in Headers */,
 				4F8210D025A03843005B9453 /* BrooklynBridge.m in Headers */,
 				4F8210AC25A035F8005B9453 /* IMCore.h in Headers */,
 				4F8210AD25A035F8005B9453 /* ChatKit.h in Headers */,
@@ -266,7 +284,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/local/opt/make/libexec/gnubin/make;
-			buildWorkingDirectory = /Users/ethanrdoesmc/Developer/NovaChat/Brooklyn/brooklyn;
+			buildWorkingDirectory = "/Users/ethanrdoesmc/Developer/Beeper/imessage-api-ios";
 			dependencies = (
 			);
 			name = brooklyn;
@@ -348,7 +366,9 @@
 				4F8D118225A572C100040303 /* ChatViewController.m in Sources */,
 				4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */,
 				4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */,
+				4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */,
 				4F82109A25A034CF005B9453 /* BLRootViewController.m in Sources */,
+				4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

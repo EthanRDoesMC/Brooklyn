@@ -1,5 +1,6 @@
 #import "BLRootViewController.h"
 #import "ChatViewController.h"
+#import "LogViewController.h"
 @interface BLRootViewController ()
 @property (nonatomic, strong) NSMutableArray * chats;
 @end
@@ -33,7 +34,7 @@
     [self reloadChats];
 	[super loadView];
 	self.title = @"Brooklyn";
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(viewLog:)];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -67,6 +68,11 @@
 - (void)addButtonTapped:(id)sender {
     BLNewChatViewController * newc = [[BLNewChatViewController alloc] initWithNibName: @"BLNewChatViewController" bundle:nil];
     [self.navigationController pushViewController:newc animated:YES];
+}
+
+-(void)viewLog:(id)sender {
+    LogViewController * logv = [[LogViewController alloc] initWithNibName: @"LogViewController" bundle:nil];
+    [self.navigationController pushViewController:logv animated:YES];
 }
 
 #pragma mark - Table View Data Source
