@@ -11,7 +11,7 @@
 
 @interface LogViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *logField;
-
+@property (nonatomic, strong) NSTask* task;
 @end
 
 @implementation LogViewController
@@ -25,19 +25,20 @@
     [arguments addObject:@"-c/User/Documents/mautrix-imessage-armv7/config.yaml"]; // Any arguments you want here...
     [arguments addObject:@"-r/User/Documents/mautrix-imessage-armv7/registration.yaml"]; // Any arguments you want here...
     
-    NSTask* task = [[NSTask alloc] init];
-    task.launchPath = @"/User/Documents/mautrix-imessage-armv7/mautrix-imessage";
-    task.arguments  = arguments;
-    task.currentDirectoryPath = @"/User/Documents/mautrix-imessage-armv7/";
-    NSLog(@"tell me about %@", task);
+    _task = [[NSTask alloc] init];
+    [_task waitUntilExit];
+    _task.launchPath = @"/User/Documents/mautrix-imessage-armv7/mautrix-imessage";
+    _task.arguments  = arguments;
+    _task.currentDirectoryPath = @"/User/Documents/mautrix-imessage-armv7/";
+    NSLog(@"tell me about %@", _task);
     NSMutableDictionary *defaultEnv = [[NSMutableDictionary alloc] initWithDictionary:[[NSProcessInfo processInfo] environment]];
     [defaultEnv setObject:@"YES" forKey:@"NSUnbufferedIO"];
     //            [defaultEnv setObject:@"/Users/ethanrdoesmc/" forKey:@"HOME"];
     
-    task.environment = defaultEnv;
+    _task.environment = defaultEnv;
     
-    task.standardOutput = [NSPipe pipe];
-    [[task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
+    _task.standardOutput = [NSPipe pipe];
+    [[_task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
         NSData *data = [file availableData]; // this will read to EOF, so call only once
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"Task output! %@", string);
@@ -49,7 +50,9 @@
         });
     }];
     
-    [task launch];
+    [_task launch];
+    //[task waitUntilExit];
+
 }
 
 /*
