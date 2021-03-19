@@ -2,8 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,25 +18,43 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" keyboardDismissMode="onDrag" editable="NO" text="a" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0B-ds-h8Q">
-                    <rect key="frame" x="0.0" y="44" width="320" height="436"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y09-xE-Ki4">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7rb-5R-HK0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" keyboardDismissMode="onDrag" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0B-ds-h8Q">
+                                <rect key="frame" x="0.0" y="55" width="320" height="425"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="C0B-ds-h8Q" firstAttribute="top" secondItem="7rb-5R-HK0" secondAttribute="top" constant="55" id="5MT-PQ-2pY"/>
+                            <constraint firstItem="C0B-ds-h8Q" firstAttribute="leading" secondItem="7rb-5R-HK0" secondAttribute="leading" id="8cE-z2-ZDB"/>
+                            <constraint firstAttribute="trailing" secondItem="C0B-ds-h8Q" secondAttribute="trailing" id="iHC-OB-VrS"/>
+                            <constraint firstAttribute="bottom" secondItem="C0B-ds-h8Q" secondAttribute="bottom" id="nir-Va-VEq"/>
+                        </constraints>
+                    </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="C0B-ds-h8Q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="Exj-Am-g9w"/>
-                <constraint firstItem="C0B-ds-h8Q" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="Hx4-zP-924"/>
-                <constraint firstItem="C0B-ds-h8Q" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="w1x-1b-whT"/>
-                <constraint firstItem="C0B-ds-h8Q" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="zXb-Xc-Yoj"/>
+                <constraint firstAttribute="trailing" secondItem="Y09-xE-Ki4" secondAttribute="trailing" id="Ag7-Jz-huV"/>
+                <constraint firstItem="Y09-xE-Ki4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="EM9-Lh-VOC"/>
+                <constraint firstItem="Y09-xE-Ki4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dEw-6O-6W8"/>
+                <constraint firstAttribute="bottom" secondItem="Y09-xE-Ki4" secondAttribute="bottom" id="m49-Ck-rJo"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
             <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="97.5" y="108.75"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
