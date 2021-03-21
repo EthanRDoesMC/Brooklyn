@@ -13,6 +13,7 @@
 //    ];
 	_window.rootViewController = _rootViewController;
 	[_window makeKeyAndVisible];
+    self.mautrixTask = [BLMautrixTask sharedTask];
 }
 
 @end
