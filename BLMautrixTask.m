@@ -97,7 +97,7 @@
 -(void)sendPing {
     NSMutableDictionary *pingDictionary = [NSMutableDictionary new];
     [pingDictionary setValue:@"ping" forKey:@"command"];
-    [pingDictionary setValue:@"27" forKey:@"id"];
+    [pingDictionary setValue:[NSNumber numberWithInt:27] forKey:@"id"];
     [self sendDictionary:pingDictionary];
 }
 @end

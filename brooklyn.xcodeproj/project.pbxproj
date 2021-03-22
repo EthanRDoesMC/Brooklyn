@@ -91,7 +91,7 @@
 		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
 		4FFD1ED22606EF8200D535B0 /* BLMautrixTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLMautrixTask.h; sourceTree = "<group>"; };
-		4FFD1ED32606EF8200D535B0 /* BLMautrixTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLMautrixTask.m; sourceTree = "<group>"; };
+		4FFD1ED32606EF8200D535B0 /* BLMautrixTask.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BLMautrixTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
