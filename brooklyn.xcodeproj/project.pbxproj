@@ -30,6 +30,7 @@
 		4F8D117D25A56DEE00040303 /* SendMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D117C25A56DEE00040303 /* SendMessageController.m */; platformFilter = ios; };
 		4F8D118125A572C100040303 /* ChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D117F25A572C100040303 /* ChatViewController.h */; platformFilter = ios; };
 		4F8D118225A572C100040303 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D118025A572C100040303 /* ChatViewController.m */; platformFilter = ios; };
+		4F975DFE260AF2F1001641BB /* BeeperAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */; };
 		4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D49362604612E00A2BE48 /* LogViewController.h */; };
 		4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D49372604612E00A2BE48 /* LogViewController.m */; };
 		4F9D49452604727F00A2BE48 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D493D2604682500A2BE48 /* NSTask.h */; };
@@ -87,6 +88,7 @@
 		4F8D117F25A572C100040303 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		4F8D118025A572C100040303 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		4F91D09425AEEB6700385427 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BeeperAppIcon.xcassets; sourceTree = "<group>"; };
 		4F9D49362604612E00A2BE48 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				4FAB0AB425D64211007448DA /* Chat Creator */,
 				4FAB0AB925D642D5007448DA /* Delegate */,
 				4F70018925993B7000698E5C /* main.m */,
+				4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */,
 				4F70018625993B7000698E5C /* Resources */,
 			);
 			name = Application;
@@ -366,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F6808B925AEE04700470DDB /* rubicon in Resources */,
+				4F975DFE260AF2F1001641BB /* BeeperAppIcon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
