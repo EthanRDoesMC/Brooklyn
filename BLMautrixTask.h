@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NSTask.h"
+#import "IMCore.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BLMautrixTask : NSObject
@@ -16,7 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 +(id)sharedTask;
 -(id)initAndLaunch;
 -(void)sendPing;
+//-(void)sendTest;
 -(void)sendDictionary:(NSDictionary *)dictionary;
+-(void)sendDictionary:(NSDictionary *)dictionary withID:(NSNumber *)msgID;
+
+-(void)handleCommand:(NSDictionary *)command;
+-(void)respondWithChatInfoForCommand:(NSDictionary *)command;
+-(void)getContactInfoForCommand:(NSDictionary *)command;
+-(void)getChatListWithCommand:(NSDictionary *)command;
+-(void)sendMessageCommand:(NSDictionary *)command;
+-(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat;
+-(void)getMessagesForCommand:(NSDictionary *)command;
 @end
 
 NS_ASSUME_NONNULL_END

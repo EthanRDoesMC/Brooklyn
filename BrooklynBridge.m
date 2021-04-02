@@ -25,7 +25,9 @@
 
 + (BOOL)riseAndShineIMDaemon {
     IMDaemonController* controller = [NSClassFromString(@"IMDaemonController") sharedController];
-    return [controller connectToDaemon];
+    BOOL connectResult = [controller connectToDaemon];
+    NSLog(@"Attempted to connect to daemon with result: %hhd", connectResult);
+    return connectResult;
 }
 
 +(NSArray *)conversationArray {

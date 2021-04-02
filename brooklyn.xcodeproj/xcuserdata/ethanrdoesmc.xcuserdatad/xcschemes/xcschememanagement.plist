@@ -11,6 +11,8 @@
 		</dict>
 		<key>xchighlight.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
@@ -23,6 +25,11 @@
 			<true/>
 		</dict>
 		<key>4F82105D25A031B9005B9453</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4F82108725A034C1005B9453</key>
 		<dict>
 			<key>primary</key>
 			<true/>

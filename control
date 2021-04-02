@@ -6,3 +6,4 @@ Description: chat thing
 Maintainer: NovaChat
 Author: NovaChat
 Section: Messaging
+Depends: mobilesubstrate (>= 0.9.6300)

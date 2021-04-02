@@ -7,6 +7,9 @@
 
 #import "ChatViewController.h"
 #import "SendMessageController.h"
+#import "BLMautrixTask.h"
+#import "IMCore.h"
+#import "ChatKit.h"
 
 @interface ChatViewController ()
 
@@ -53,7 +56,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:Cell2Identifier];
     }
     
-    cell.textLabel.text = @"open transcript";
+    cell.textLabel.text = @"Forward latest message";
     
     return cell;
 }
@@ -109,14 +112,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [[BrooklynBridge sharedBridge] playLoadingChime];
-    CKTranscriptController * tc = [[CKTranscriptController alloc] init];
-    [tc setConversation:self.chat];
-    [self.chat.chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:YES];
-    
-    [self.navigationController pushViewController:tc animated:YES];
-    [[BrooklynBridge sharedBridge] stopLoadingChime];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [[BrooklynBridge sharedBridge] playLoadingChime];
+//    CKTranscriptController * tc = [[CKTranscriptController alloc] init];
+//    [tc setConversation:self.chat];
+//    [self.chat.chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:YES];
+//
+//    [self.navigationController pushViewController:tc animated:YES];
+//    [[BrooklynBridge sharedBridge] stopLoadingChime];
+    [[BLMautrixTask sharedTask] forwardMessage:[self.chat.chat lastMessage] fromChat:self.chat.chat];
 }
 
 @end

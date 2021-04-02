@@ -34,7 +34,8 @@
     [self reloadChats];
 	[super loadView];
 	self.title = @"Brooklyn";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(viewLog:)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log" style:UIBarButtonItemStylePlain target:self action:@selector(viewLog:)];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
@@ -47,6 +48,7 @@
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
+    [self reloadChats];
     self.tableView.backgroundColor = [UIColor clearColor];
     UIBlurEffect * be = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     UIVisualEffectView * vev = [[UIVisualEffectView alloc] initWithEffect:be];
@@ -54,10 +56,15 @@
     self.tableView.separatorEffect = [UIVibrancyEffect effectForBlurEffect:be];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self reloadChats];
-    [self.tableView reloadData];
-    [[BrooklynBridge sharedBridge] stopLoadingChime];
     
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [[BrooklynBridge sharedBridge] stopLoadingChime];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageReceivedNotification" object:nil];
+    
+}
+-(void)incomingMessage:(NSNotification *)notif {
+    self.navigationItem.prompt = @"Incoming message";
+    NSLog(@"%@ | %@ | %@", notif.name, notif.object, notif.userInfo);
 }
 -(void)viewDidAppear:(BOOL)animated {
     [self reloadChats];
@@ -90,9 +97,10 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (!cell) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor clearColor];
 	}
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.backgroundColor = [UIColor clearColor];
+    
 	return cell;
 }
 

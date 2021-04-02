@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F360C2626167D5F00DCB726 /* UIImage+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F360C2426167D5F00DCB726 /* UIImage+Base64.h */; };
+		4F360C2726167D5F00DCB726 /* UIImage+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F360C2526167D5F00DCB726 /* UIImage+Base64.m */; };
 		4F48376A25F20FE0001B9415 /* MessageBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F48376825F20FE0001B9415 /* MessageBuilder.h */; };
 		4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F48376925F20FE0001B9415 /* MessageBuilder.m */; };
 		4F6808B125AEDEE500470DDB /* IMCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AD25AEDEE500470DDB /* IMCore.framework */; };
@@ -55,6 +57,8 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
+		4F360C2426167D5F00DCB726 /* UIImage+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Base64.h"; sourceTree = "<group>"; };
+		4F360C2526167D5F00DCB726 /* UIImage+Base64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Base64.m"; sourceTree = "<group>"; };
 		4F48376825F20FE0001B9415 /* MessageBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBuilder.h; sourceTree = "<group>"; };
 		4F48376925F20FE0001B9415 /* MessageBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBuilder.m; sourceTree = "<group>"; };
 		4F6808AD25AEDEE500470DDB /* IMCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMCore.framework; sourceTree = "<group>"; };
@@ -92,6 +96,7 @@
 		4F9D49362604612E00A2BE48 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
+		4FB2B7FE2611032700E524B3 /* layout */ = {isa = PBXFileReference; lastKnownFileType = folder; path = layout; sourceTree = "<group>"; };
 		4FFD1ED22606EF8200D535B0 /* BLMautrixTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLMautrixTask.h; sourceTree = "<group>"; };
 		4FFD1ED32606EF8200D535B0 /* BLMautrixTask.m */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = BLMautrixTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F360C2A26167E9100DCB726 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				4F360C2426167D5F00DCB726 /* UIImage+Base64.h */,
+				4F360C2526167D5F00DCB726 /* UIImage+Base64.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		4F6808AC25AEDEE500470DDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +175,7 @@
 				4FAB0AB925D642D5007448DA /* Delegate */,
 				4F70018925993B7000698E5C /* main.m */,
 				4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */,
+				4FB2B7FE2611032700E524B3 /* layout */,
 				4F70018625993B7000698E5C /* Resources */,
 			);
 			name = Application;
@@ -233,6 +248,7 @@
 				4F7001992599756800698E5C /* IMCore.h */,
 				4F9D493D2604682500A2BE48 /* NSTask.h */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
+				4F360C2A26167E9100DCB726 /* Categories */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -277,6 +293,7 @@
 			files = (
 				4F82108C25A034C1005B9453 /* xchighlight.h in Headers */,
 				4F9D49452604727F00A2BE48 /* NSTask.h in Headers */,
+				4F360C2626167D5F00DCB726 /* UIImage+Base64.h in Headers */,
 				4F8D117625A5314600040303 /* SendMessageController.h in Headers */,
 				4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */,
 				4F48376A25F20FE0001B9415 /* MessageBuilder.h in Headers */,
@@ -297,7 +314,7 @@
 /* Begin PBXLegacyTarget section */
 		4F70018325993B7000698E5C /* brooklyn */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = package;
 			buildConfigurationList = 4F70018D25993B7000698E5C /* Build configuration list for PBXLegacyTarget "brooklyn" */;
 			buildPhases = (
 			);
@@ -387,6 +404,7 @@
 				4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */,
 				4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */,
 				4F82109A25A034CF005B9453 /* BLRootViewController.m in Sources */,
+				4F360C2726167D5F00DCB726 /* UIImage+Base64.m in Sources */,
 				4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */,
 				4FFD1ED52606EF8200D535B0 /* BLMautrixTask.m in Sources */,
 			);
