@@ -121,6 +121,7 @@
 -(NSString *)lastName;
 -(NSString *)nickname;
 -(NSArray *)emails;
+-(int)recordID;
 @end
 
 @interface IMHandle : NSObject

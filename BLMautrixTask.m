@@ -24,7 +24,8 @@ NSInteger requestID = 0;
 }
 -(id)initAndLaunch {
     // Register notification observers
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageReceivedNotification" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageReceivedNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageDidChangeNotification" object:nil];
     
     
     
@@ -49,7 +50,7 @@ NSInteger requestID = 0;
     [[self.task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
         NSData *data = [file availableData];
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Task output! %@", string);
+        NSLog(@"mautrix-imessage sent output:%@", string);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self->_outputString) {
                 self->_outputString = @"Begin log \n"; //otherwise we're appending to nil
@@ -63,7 +64,7 @@ NSInteger requestID = 0;
     [[self.task.standardError fileHandleForReading] setReadabilityHandler:^(NSFileHandle *errfile) {
         NSData *errdata = [errfile availableData];
         NSString *errstring = [[NSString alloc] initWithData:errdata encoding:NSUTF8StringEncoding];
-        NSLog(@"mautrix-imessage sent error: %@", errstring);
+        NSLog(@"mautrix-imessage sent error:%@", errstring);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self->_outputString) {
                 self->_outputString = @"Begin log \n";
@@ -98,9 +99,10 @@ NSInteger requestID = 0;
 //        requestID = (NSInteger)msgID;
 //    }
     NSData *dataForSending = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
-    NSString *jsonString = [[NSString alloc] initWithData:dataForSending encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:dataForSending options:0 error:nil]);
-    NSLog(@"%@", jsonString);
+    //NSString *jsonString = [[NSString alloc] initWithData:dataForSending encoding:NSUTF8StringEncoding];
+    //NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:dataForSending options:0 error:nil]);
+    //NSLog(@"%@", jsonString);
+    NSLog(@"Writing data");
     [[self.task.standardInput fileHandleForWriting] writeData:dataForSending];
 }
 
@@ -108,6 +110,7 @@ NSInteger requestID = 0;
 -(void)sendPing {
     NSMutableDictionary *pingDictionary = [NSMutableDictionary new];
     [pingDictionary setValue:@"ping" forKey:@"command"];
+    NSLog(@"Sending ping");
     [self sendDictionary:pingDictionary];
 }
 
@@ -124,10 +127,12 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"message" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
+    NSLog(@"Forwarding a message");
     [self sendDictionary:request];
 }
 
 -(void)handleCommand:(NSDictionary *)command {
+    NSLog(@"Got command %@", command[@"command"]);
     if ([command[@"command"] isEqual:@"get_chat"]) {
         [self respondWithChatInfoForCommand:command];
     } else if ([command[@"command"] isEqual:@"get_contact"]) {
@@ -157,7 +162,6 @@ NSInteger requestID = 0;
             [messageDict setValue:[NSNumber numberWithBool:[message isFromMe]] forKey:@"is_from_me"];
             [messageDict setValue:[NSString stringWithFormat:@"%@;-;%@", [[message sender] accountTypeName], [[message sender] ID]] forKey:@"sender_guid"];
             [messageDict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
-            NSLog(@"%@ %@", message, messageDict);
             [messageArray addObject:[NSDictionary dictionaryWithDictionary:messageDict]];
         }
         
@@ -166,6 +170,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSArray arrayWithArray:messageArray] forKey:@"data"];
+    NSLog(@"Got messages; returning...");
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -181,6 +186,7 @@ NSInteger requestID = 0;
     [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
+    NSLog(@"Sent message; telling bridge...");
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -202,6 +208,7 @@ NSInteger requestID = 0;
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
     //NSLog(@"member array: %@, dictionary: %@", memberArray, request);
+    NSLog(@"Got chat info, sending to bridge...");
     [self sendDictionary:request withID:command[@"id"]];
 }
 -(void)getContactInfoForCommand:(NSDictionary *)command {
@@ -211,8 +218,10 @@ NSInteger requestID = 0;
         [datadict setValue:[[handle person] firstName] forKey:@"first_name"];
         [datadict setValue:[[handle person] lastName] forKey:@"last_name"];
         [datadict setValue:[[handle person] nickname] forKey:@"nickname"];
-        [datadict setValue:[[[[CKEntity alloc] initWithIMHandle:handle] transcriptContactImage] encodeToBase64String] forKey:@"avatar"];
-        NSLog(@"%@", [[[[CKEntity alloc] initWithIMHandle:handle] transcriptContactImage] encodeToBase64String]);
+        //[datadict setValue:[[[[CKEntity alloc] initWithIMHandle:handle] transcriptContactImage] encodeToBase64String] forKey:@"avatar"];
+        //[datadict setValue:[[UIImage imageWithData:[[handle person] imageData]]encodeToBase64String] forKey:@"avatar"];
+        //NSLog(@"%@", [[[[CKEntity alloc] initWithIMHandle:handle] transcriptContactImage] encodeToBase64String]);
+        [datadict setValue:[[CKAddressBook contactImageOfDiameter:512 forRecordID:[handle person].recordID monogramStyle:1 tintMonogramText:NO] encodeToBase64String] forKey:@"avatar"];
         [datadict setValue:[[handle person] phoneNumbers] forKey:@"phones"];
         [datadict setValue:[[handle person] emails] forKey:@"emails"];
     } else {
@@ -231,6 +240,7 @@ NSInteger requestID = 0;
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
     //NSLog(@"member array: %@, dictionary: %@", memberArray, request);
+    NSLog(@"Got contact info, sending to bridge...");
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -248,6 +258,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSArray arrayWithArray:guidArray] forKey:@"data"];
+    NSLog(@"Got chat list, returning...");
     [self sendDictionary:request withID:command[@"id"]];
 }
 @end

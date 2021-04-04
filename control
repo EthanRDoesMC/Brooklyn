@@ -1,9 +1,9 @@
-Package: chat.nova.brooklyn
+Package: com.beeper.brooklyn
 Name: Brooklyn
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: chat thing
-Maintainer: NovaChat
-Author: NovaChat
+Description: Bridge for Beeper that interfaces with iMessage directly.
+Maintainer: Beeper
+Author: Beeper
 Section: Messaging
-Depends: mobilesubstrate (>= 0.9.6300)
+Depends: mobilesubstrate (>= 0.9.6300), ws.hbang.common

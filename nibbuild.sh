@@ -18,6 +18,7 @@ cd ..
 /Applications/Xcode.app/Contents/Developer/usr/bin/actool BeeperAppIcon.xcassets --compile ./Resources --platform iphoneos  --minimum-deployment-target 8.0 --app-icon BeeperAppIcon --output-partial-info-plist tmp.plist
 /usr/libexec/PlistBuddy -x -c "Merge tmp.plist" ./Resources/Info.plist
 rm tmp.plist
+
 echo "good luck"
 else
     echo "Not macOS. Xibs will not be built."

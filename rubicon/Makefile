@@ -8,6 +8,7 @@ TWEAK_NAME = Rubicon
 
 Rubicon_FILES = Tweak.xm
 Rubicon_PRIVATE_FRAMEWORKS = ChatKit IMCore
+Rubicon_FRAMEWORKS = Foundation CoreFoundation
 Rubicon_CFLAGS = -fobjc-arc
 Rubicon_CODESIGN_FLAGS = -Sentitlements.xml
 

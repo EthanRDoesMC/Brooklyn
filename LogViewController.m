@@ -24,6 +24,7 @@
     [self updateLog];
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLog) name:@"BLMautrixLogUpdated" object:nil];
+    self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:0];
 }
 
 -(void)updateLog {

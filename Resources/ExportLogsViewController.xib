@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExportLogsViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4GH-Vq-5w8">
+                    <rect key="frame" x="0.0" y="124" width="320" height="216"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="mbb-ZS-3fX"/>
+                        <outlet property="delegate" destination="-1" id="Sef-1V-kV7"/>
+                    </connections>
+                </pickerView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C8E-gk-iBB">
+                    <rect key="frame" x="8" y="348" width="304" height="30"/>
+                    <state key="normal" title="Share"/>
+                    <connections>
+                        <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="jBE-zr-eGK"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="C8E-gk-iBB" secondAttribute="trailing" constant="8" id="98V-aw-28W"/>
+                <constraint firstItem="4GH-Vq-5w8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="L9h-2I-mgt"/>
+                <constraint firstItem="4GH-Vq-5w8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="124" id="MEN-H2-TdB"/>
+                <constraint firstItem="C8E-gk-iBB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Tl5-bZ-kwq"/>
+                <constraint firstItem="C8E-gk-iBB" firstAttribute="top" secondItem="4GH-Vq-5w8" secondAttribute="bottom" constant="8" symbolic="YES" id="tCD-9b-PFq"/>
+            </constraints>
+            <point key="canvasLocation" x="826.875" y="95"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

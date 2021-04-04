@@ -1,8 +1,10 @@
 #import "BLRootViewController.h"
 #import "ChatViewController.h"
 #import "LogViewController.h"
+#import "ExportLogsViewController.h"
 @interface BLRootViewController ()
 @property (nonatomic, strong) NSMutableArray * chats;
+@property (nonatomic, strong) UITabBarController * tbc;
 @end
 
 @implementation BLRootViewController
@@ -79,7 +81,13 @@
 
 -(void)viewLog:(id)sender {
     LogViewController * logv = [[LogViewController alloc] initWithNibName: @"LogViewController" bundle:nil];
-    [self.navigationController pushViewController:logv animated:YES];
+    ExportLogsViewController * lev = [[ExportLogsViewController alloc] initWithNibName: @"ExportLogsViewController" bundle:nil];
+    self.tbc = [UITabBarController new];
+    logv.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:0];
+    lev.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemRecents tag:1];
+    [self.tbc setViewControllers:@[logv, lev]];
+    
+    [self.navigationController pushViewController:self.tbc animated:YES];
 }
 
 #pragma mark - Table View Data Source
