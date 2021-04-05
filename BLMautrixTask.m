@@ -199,9 +199,9 @@ NSInteger requestID = 0;
     NSMutableDictionary * datadict = [NSMutableDictionary new];
     CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
     if (conversation.hasDisplayName) {
-        [datadict setValue:[conversation displayName] forKey:@"name"];
+        [datadict setValue:[conversation displayName] forKey:@"title"];
     } else {
-        [datadict setValue:[conversation name] forKey:@"name"];
+        [datadict setValue:[conversation name] forKey:@"title"];
     }
     [datadict setObject:[NSArray arrayWithArray:memberArray] forKey:@"members"];
     NSMutableDictionary * request = [NSMutableDictionary new];

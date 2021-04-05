@@ -2,7 +2,6 @@
 // Created by EthanRDoesMC for NovaChat
 
 #import <Foundation/Foundation.h>
-#import <Cephei/HBPreferences.h>
 #pragma mark - Headers
 @interface FTDeviceSupport : NSObject
 +(id)sharedInstance;
@@ -124,14 +123,10 @@
 %end
 
 %ctor {
-    if (![[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.imagent"]) {
-
-    HBPreferences * preferences = [[HBPreferences alloc] initWithIdentifier:@"com.beeper.brooklynsettings"];
     BOOL enabled;
-    [preferences registerBool:&enabled default:NO forKey:@"bypassEnabled"];
-    
-    if (enabled && ![[[NSBundle mainBundle] bundleIdentifier] isEqualToString:@"com.apple.imagent"]) {
+    NSMutableDictionary * prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.beeper.brooklynsettings.plist"];
+    enabled = [prefs objectForKey:@"bypassEnabled"] ? [[prefs objectForKey:@"bypassEnabled"] boolValue] : NO;;
+    if (enabled) {
         %init(main)
-    }
     }
 }

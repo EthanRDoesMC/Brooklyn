@@ -1,6 +1,5 @@
 #import <Preferences/PSListController.h>
-#import <CepheiPrefs/HBRootListController.h>
 
-@interface BLSRootListController : HBRootListController
+@interface BLSRootListController : PSListController
 
 @end

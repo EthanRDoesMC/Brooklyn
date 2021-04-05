@@ -9,6 +9,5 @@ BrooklynSettings_FRAMEWORKS = UIKit
 BrooklynSettings_PRIVATE_FRAMEWORKS = Preferences
 BrooklynSettings_INSTALL_PATH = /Library/PreferenceBundles
 BrooklynSettings_CFLAGS = -fobjc-arc
-BrooklynSettings_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 
 include $(THEOS_MAKE_PATH)/bundle.mk

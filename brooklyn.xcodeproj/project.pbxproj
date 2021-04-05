@@ -17,9 +17,7 @@
 		4F6808B425AEDEE500470DDB /* MessageUI.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808B025AEDEE500470DDB /* MessageUI.tbd */; };
 		4F6808B925AEE04700470DDB /* rubicon in Resources */ = {isa = PBXBuildFile; fileRef = 4F6808B825AEE04700470DDB /* rubicon */; };
 		4F8092D5261993C900A13658 /* brooklynsettings in Resources */ = {isa = PBXBuildFile; fileRef = 4F8092D4261993C900A13658 /* brooklynsettings */; };
-		4F8092DB2619944200A13658 /* CepheiPrefs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8092DA2619944200A13658 /* CepheiPrefs.framework */; };
 		4F8092E326199A8200A13658 /* brooklynbypass in Resources */ = {isa = PBXBuildFile; fileRef = 4F8092E226199A8200A13658 /* brooklynbypass */; };
-		4F81239026196A71002E2FF9 /* Cephei.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F81238F26196A71002E2FF9 /* Cephei.framework */; };
 		4F82108C25A034C1005B9453 /* xchighlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F82108A25A034C1005B9453 /* xchighlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70018825993B7000698E5C /* BLAppDelegate.m */; platformFilter = ios; };
 		4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */; platformFilter = ios; };
@@ -88,9 +86,7 @@
 		4F7001992599756800698E5C /* IMCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCore.h; sourceTree = "<group>"; };
 		4F70019A2599A13E00698E5C /* ChatKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatKit.h; sourceTree = "<group>"; };
 		4F8092D4261993C900A13658 /* brooklynsettings */ = {isa = PBXFileReference; lastKnownFileType = folder; path = brooklynsettings; sourceTree = "<group>"; };
-		4F8092DA2619944200A13658 /* CepheiPrefs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CepheiPrefs.framework; sourceTree = "<group>"; };
 		4F8092E226199A8200A13658 /* brooklynbypass */ = {isa = PBXFileReference; lastKnownFileType = folder; path = brooklynbypass; sourceTree = "<group>"; };
-		4F81238F26196A71002E2FF9 /* Cephei.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Cephei.framework; sourceTree = "<group>"; };
 		4F82105425A024C6005B9453 /* nibbuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = nibbuild.sh; sourceTree = "<group>"; };
 		4F82108825A034C1005B9453 /* xchighlight.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xchighlight.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F82108A25A034C1005B9453 /* xchighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xchighlight.h; sourceTree = "<group>"; };
@@ -121,9 +117,7 @@
 				4F6808B425AEDEE500470DDB /* MessageUI.tbd in Frameworks */,
 				4F6808B325AEDEE500470DDB /* IMFoundation.framework in Frameworks */,
 				4F6808B125AEDEE500470DDB /* IMCore.framework in Frameworks */,
-				4F8092DB2619944200A13658 /* CepheiPrefs.framework in Frameworks */,
 				4F6808B225AEDEE500470DDB /* ChatKit.framework in Frameworks */,
-				4F81239026196A71002E2FF9 /* Cephei.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,10 +136,8 @@
 		4F6808AC25AEDEE500470DDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4F81238F26196A71002E2FF9 /* Cephei.framework */,
 				4F6808AD25AEDEE500470DDB /* IMCore.framework */,
 				4F6808AE25AEDEE500470DDB /* ChatKit.framework */,
-				4F8092DA2619944200A13658 /* CepheiPrefs.framework */,
 				4F6808AF25AEDEE500470DDB /* IMFoundation.framework */,
 				4F6808B025AEDEE500470DDB /* MessageUI.tbd */,
 			);
@@ -343,7 +335,7 @@
 /* Begin PBXLegacyTarget section */
 		4F70018325993B7000698E5C /* brooklyn */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "clean do";
 			buildConfigurationList = 4F70018D25993B7000698E5C /* Build configuration list for PBXLegacyTarget "brooklyn" */;
 			buildPhases = (
 			);
