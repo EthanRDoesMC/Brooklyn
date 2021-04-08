@@ -10,6 +10,35 @@
 #import "ChatKit.h"
 #import "UIImage+Base64.h"
 
+// you're a god among men, kirb, but we need consolidation
+// all credits go to https://github.com/hbang/libcephei/blob/master/HBOutputForShellCommand.m
+
+NSString *HBOutputForShellCommandWithReturnCode(NSString *command, int *returnCode) {
+    FILE *file = popen(command.UTF8String, "r");
+    
+    if (!file) {
+        return nil;
+    }
+    
+    char data[1024];
+    NSMutableString *output = [NSMutableString string];
+    
+    while (fgets(data, 1024, file) != NULL) {
+        [output appendString:[NSString stringWithUTF8String:data]];
+    }
+    
+    int result = pclose(file);
+    *returnCode = result;
+    
+    return output;
+}
+
+NSString *HBOutputForShellCommand(NSString *command) {
+    int returnCode = 0;
+    NSString *output = HBOutputForShellCommandWithReturnCode(command, &returnCode);
+    return returnCode == 0 ? output : nil;
+}
+
 @implementation BLMautrixTask
 NSInteger requestID = 0;
 
@@ -25,9 +54,18 @@ NSInteger requestID = 0;
 -(id)initAndLaunch {
     // Register notification observers
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageReceivedNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(analyzeNotification:) name:@"__kIMChatItemsInserted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleExternal:) name:@"__kIMChatMessageDidChangeNotification" object:nil];
+    self.sessionSentGUIDs = [NSMutableArray new];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageDidChangeNotification" object:nil];
-    
-    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Beeper/%@.txt", [NSDate date]]];
+    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]]];
+    if ( !fh ) {
+        [[NSFileManager defaultManager] createFileAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]] contents:nil attributes:nil];
+        fh = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]]];
+    }
     
     NSLog(@"Brooklyn launching task");
     self = [super init];
@@ -53,8 +91,10 @@ NSInteger requestID = 0;
         NSLog(@"mautrix-imessage sent output:%@", string);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self->_outputString) {
-                self->_outputString = @"Begin log \n"; //otherwise we're appending to nil
+                self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")]; //otherwise we're appending to nil
             }
+            [fh seekToEndOfFile];
+            [fh writeData:data];
         self.outputString = [[self outputString] stringByAppendingString:string];
         [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
             [self handleCommand:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
@@ -67,8 +107,10 @@ NSInteger requestID = 0;
         NSLog(@"mautrix-imessage sent error:%@", errstring);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self->_outputString) {
-                self->_outputString = @"Begin log \n";
+                self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")];
             }
+            [fh seekToEndOfFile];
+            [fh writeData:errdata];
         self.outputString = [[self outputString] stringByAppendingString:errstring];
         [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
         });
@@ -87,6 +129,32 @@ NSInteger requestID = 0;
 -(void)incomingMessage:(NSNotification *)notification {
     [self forwardMessage:notification.userInfo[@"__kIMChatValueKey"] fromChat:notification.object];
     NSLog(@"Forwarding incoming message to bridge");
+}
+
+-(void)analyzeNotification:(NSNotification *)notification {
+    NSLog(@"%@ / %@ / %@", notification.name, notification.object, notification.userInfo);
+}
+
+-(void)handleExternal:(NSNotification *)notification {
+    IMMessage * thisMessage = notification.userInfo[@"__kIMChatValueKey"];
+    NSLog(@"%@", thisMessage);
+    BOOL isDupe = false;
+    if (thisMessage.isFromMe) {
+        if (thisMessage == self.mostRecentMessage) {
+            isDupe = true;
+            NSLog(@"%hhd", isDupe);
+        }
+        for (NSString * sentGUID in self.sessionSentGUIDs) {
+            if ([thisMessage.guid isEqualToString:sentGUID]) {
+                isDupe = true;
+                NSLog(@"%hhd", isDupe);
+            }
+        }
+    }
+    NSLog(@"%hhd", isDupe);
+    if (isDupe == false) {
+        [self forwardMessage:notification.userInfo[@"__kIMChatValueKey"] fromChat:notification.object];
+    }
 }
 
 -(void)sendDictionary:(NSDictionary *)dictionary {
@@ -180,9 +248,11 @@ NSInteger requestID = 0;
     CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
     CKComposition * composition = [[CKComposition alloc] initWithText:[[NSAttributedString alloc] initWithString:command[@"data"][@"text"]] subject:nil];
     IMMessage * message = [conversation messageWithComposition:composition];
+    self.mostRecentMessage = message;
     [thisChat sendMessage:message];
     NSMutableDictionary * request = [NSMutableDictionary new];
     [datadict setValue:[message guid] forKey:@"guid"];
+    [self.sessionSentGUIDs addObject:[message guid]];
     [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];

@@ -26,28 +26,6 @@
 			<key>PostNotification</key>
 			<string>com.beeper.brooklynsettings/settingsChanged</string>
 		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Logging</string>
-			<key>footerText</key>
-			<string>This will use up your storage over time! Logs are located in /User/Documents/Beeper or by tapping Log in Brooklyn.</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>default</key>
-			<false/>
-			<key>defaults</key>
-			<string>com.beeper.brooklynsettings</string>
-			<key>key</key>
-			<string>logging</string>
-			<key>label</key>
-			<string>Save logs for sharing</string>
-			<key>PostNotification</key>
-			<string>com.beeper.brooklynsettings/settingsChanged</string>
-		</dict>
 	</array>
 	<key>title</key>
 	<string>Brooklyn</string>

@@ -19,7 +19,7 @@
 -(IMHandle *)sender;
 -(IMHandle *)subject;
 -(char)isFinished;
--(char)isFromMe;
+-(BOOL)isFromMe;
 -(NSString *)plainBody;
 -(char)isAudioMessage;
 -(char)isPlayed;

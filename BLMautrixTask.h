@@ -14,13 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSTask * task;
 @property (strong, nonatomic) NSString * outputString;
 @property (strong, nonatomic) NSPipe * writePipe;
+@property (strong, nonatomic) NSMutableArray * sessionSentGUIDs;
+@property (assign) IMMessage * mostRecentMessage;
 +(id)sharedTask;
 -(id)initAndLaunch;
 -(void)sendPing;
 //-(void)sendTest;
 -(void)sendDictionary:(NSDictionary *)dictionary;
 -(void)sendDictionary:(NSDictionary *)dictionary withID:(NSNumber *)msgID;
-
+-(void)handleExternal:(NSNotification *)notification;
 -(void)handleCommand:(NSDictionary *)command;
 -(void)respondWithChatInfoForCommand:(NSDictionary *)command;
 -(void)getContactInfoForCommand:(NSDictionary *)command;
