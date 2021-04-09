@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * outputString;
 @property (strong, nonatomic) NSPipe * writePipe;
 @property (strong, nonatomic) NSMutableArray * sessionSentGUIDs;
-@property (assign) IMMessage * mostRecentMessage;
+@property (strong, nonatomic) IMMessage * mostRecentMessage;
 +(id)sharedTask;
 -(id)initAndLaunch;
 -(void)sendPing;
@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)getContactInfoForCommand:(NSDictionary *)command;
 -(void)getChatListWithCommand:(NSDictionary *)command;
 -(void)sendMessageCommand:(NSDictionary *)command;
+-(void)sendAttachmentCommand:(NSDictionary *)command;
 -(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat;
 -(void)getMessagesForCommand:(NSDictionary *)command;
 @end
