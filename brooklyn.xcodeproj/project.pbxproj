@@ -335,7 +335,7 @@
 /* Begin PBXLegacyTarget section */
 		4F70018325993B7000698E5C /* brooklyn */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "clean do";
+			buildArgumentsString = do;
 			buildConfigurationList = 4F70018D25993B7000698E5C /* Build configuration list for PBXLegacyTarget "brooklyn" */;
 			buildPhases = (
 			);

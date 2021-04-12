@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)sendAttachmentCommand:(NSDictionary *)command;
 -(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat;
 -(void)getMessagesForCommand:(NSDictionary *)command;
+-(void)sendReadReceiptWithCommand:(NSDictionary *)command;
 @end
 
 NS_ASSUME_NONNULL_END

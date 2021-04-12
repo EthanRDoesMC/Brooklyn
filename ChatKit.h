@@ -10,11 +10,11 @@
 #pragma mark - Contacts
 @interface CKAddressBook : NSObject
 +(id)transcriptContactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 ;
-+(id)locationSharingContactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 useCustomFont:(char)arg3 ;
-+(id)monogrammerWithDiameter:(float)arg1 style:(int)arg2 useAppTintColor:(char)arg3 customFont:(id)arg4 ;
-+(id)placeholderContactImageOfDiameter:(float)arg1 monogramStyle:(int)arg2 tintMonogramText:(char)arg3 ;
-+(id)contactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 monogramStyle:(int)arg3 tintMonogramText:(char)arg4 ;
-+(id)contactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 monogramStyle:(int)arg3 tintMonogramText:(char)arg4 customFont:(id)arg5 ;
++(id)locationSharingContactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 useCustomFont:(BOOL)arg3 ;
++(id)monogrammerWithDiameter:(float)arg1 style:(int)arg2 useAppTintColor:(BOOL)arg3 customFont:(id)arg4 ;
++(id)placeholderContactImageOfDiameter:(float)arg1 monogramStyle:(int)arg2 tintMonogramText:(BOOL)arg3 ;
++(id)contactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 monogramStyle:(int)arg3 tintMonogramText:(BOOL)arg4 ;
++(id)contactImageOfDiameter:(float)arg1 forRecordID:(int)arg2 monogramStyle:(int)arg3 tintMonogramText:(BOOL)arg4 customFont:(id)arg5 ;
 +(void*)addressBook;
 @end
 
@@ -22,7 +22,7 @@
 #pragma mark - Contents
 @interface CKComposition : NSObject
 +(id)composition;
-+(id)compositionForMessageParts:(id)arg1 preserveSubject:(char)arg2;
++(id)compositionForMessageParts:(id)arg1 preserveSubject:(BOOL)arg2;
 +(id)audioCompositionWithMediaObject:(id)arg1;
 +(id)expirableCompositionWithMediaObject:(id)arg1;
 +(id)compositionWithMediaObject:(id)arg1 subject:(id)arg2;
@@ -35,8 +35,8 @@
 
 -(NSAttributedString *)text;
 -(void)setText:(NSAttributedString *)arg1;
--(char)hasContent;
--(char)isTextOnly;
+-(BOOL)hasContent;
+-(BOOL)isTextOnly;
 -(void)setSubject:(NSAttributedString *)arg1;
 -(NSAttributedString *)subject;
 -(NSArray *)mediaObjects;
@@ -46,12 +46,12 @@
 -(id)compositionByAppendingText:(id)arg1;
 -(id)compositionByAppendingComposition:(id)arg1;
 -(NSArray *)pasteboardItems;
--(char)isExpirableComposition;
--(char)hasNonwhiteSpaceContent;
+-(BOOL)isExpirableComposition;
+-(BOOL)hasNonwhiteSpaceContent;
 -(void)saveCompositionWithGUID:(id)arg1;
 -(id)compositionByAppendingMediaObject:(id)arg1;
 -(id)messageWithGUID:(id)arg1;
--(char)isSaveable;
+-(BOOL)isSaveable;
 -(id)superFormatText:(id*)arg1;
 -(id)superFormatSubject;
 @end
@@ -65,21 +65,21 @@
 @property (nonatomic,copy,readonly) NSError * error;
 @property (nonatomic,readonly) unsigned long long currentBytes;
 @property (nonatomic,readonly) unsigned long long totalBytes;
-@property (getter=isFileURLFinalized,nonatomic,readonly) char fileURLFinalized;
-@property (getter=isFileDataReady,nonatomic,readonly) char fileDataReady;
-@property (getter=isDownloadable,nonatomic,readonly) char downloadable;
-@property (getter=isDownloading,nonatomic,readonly) char downloading;
-@property (getter=isRestoring,nonatomic,readonly) char restoring;
+@property (getter=isFileURLFinalized,nonatomic,readonly) BOOL fileURLFinalized;
+@property (getter=isFileDataReady,nonatomic,readonly) BOOL fileDataReady;
+@property (getter=isDownloadable,nonatomic,readonly) BOOL downloadable;
+@property (getter=isDownloading,nonatomic,readonly) BOOL downloading;
+@property (getter=isRestoring,nonatomic,readonly) BOOL restoring;
 @required
--(char)isDownloadable;
+-(BOOL)isDownloadable;
 -(NSURL *)fileURL;
 -(IMMessage *)IMMessage;
--(char)isFileDataReady;
--(char)isRestoring;
+-(BOOL)isFileDataReady;
+-(BOOL)isRestoring;
 -(void)mediaObjectRemoved;
 -(void)mediaObjectAdded;
 -(NSDictionary *)transcoderUserInfo;
--(char)isFileURLFinalized;
+-(BOOL)isFileURLFinalized;
 -(id)initWithFileURL:(id)arg1 transcoderUserInfo:(id)arg2;
 -(id)initWithTransferGUID:(id)arg1 imMessage:(id)arg2;
 -(unsigned long long)currentBytes;
@@ -88,7 +88,7 @@
 -(NSString *)filename;
 -(NSString *)guid;
 -(unsigned long long)totalBytes;
--(char)isDownloading;
+-(BOOL)isDownloading;
 @end
 
 @interface CKMediaObject : NSObject
@@ -150,29 +150,29 @@
 -(NSAttributedString *)transcriptText; // contents (attributed string)
 -(NSAttributedString *)transcriptDrawerText; // timestamp, attributed
 -(id)loadTranscriptDrawerText;
--(char)canSave;
+-(BOOL)canSave;
 @end
 
 @interface CKBalloonChatItem : CKChatItem
 -(NSDate *)time; // pure timestamp
 -(IMHandle *)sender; // sender object
--(char)isFromMe;
--(char)isFirstChatItem;
--(char)failed;
+-(BOOL)isFromMe;
+-(BOOL)isFirstChatItem;
+-(BOOL)failed;
 @end
 
 @interface CKMessagePartChatItem : CKBalloonChatItem
 -(id)composition; // comprehensive contents without size formatting or sender info
 -(IMMessage *)message;
--(char)color; // either green/blue or out/in
--(char)canSendAsTextMessage;
+-(BOOL)color; // either green/blue or out/in
+-(BOOL)canSendAsTextMessage;
 -(NSArray *)pasteboardItems; // what is this??
 @end
 
 @interface CKTextMessagePartChatItem : CKMessagePartChatItem
 -(NSAttributedString *)text;
 -(NSAttributedString *)subject;
--(char)containsHyperlink;
+-(BOOL)containsHyperlink;
 @end
 
 @interface CKAttachmentMessagePartChatItem : CKMessagePartChatItem
@@ -231,22 +231,22 @@
 #pragma mark CULL THROUGH THIS
 @interface CKConversation : NSObject
 +(id)newPendingConversation;
-+(char)_iMessage_canSendMessageWithMediaObjectTypes:(int*)arg1 ;
-+(char)_sms_canSendMessageWithMediaObjectTypes:(int*)arg1 ;
++(BOOL)_iMessage_canSendMessageWithMediaObjectTypes:(int*)arg1 ;
++(BOOL)_sms_canSendMessageWithMediaObjectTypes:(int*)arg1 ;
 +(double)_sms_maxTrimDurationForMediaType:(int)arg1 ;
 +(double)_iMessage_maxTrimDurationForMediaType:(int)arg1 ;
-+(char)_sms_canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
-+(char)_iMessage_canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
-+(char)_sms_canSendComposition:(id)arg1 error:(id*)arg2 ;
-+(char)_iMessage_canSendComposition:(id)arg1 error:(id*)arg2 ;
++(BOOL)_sms_canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
++(BOOL)_iMessage_canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
++(BOOL)_sms_canSendComposition:(id)arg1 error:(id*)arg2 ;
++(BOOL)_iMessage_canSendComposition:(id)arg1 error:(id*)arg2 ;
 +(int)_iMessage_maxAttachmentCount;
-+(char)_iMessage_canSendMessageWithMediaObjectTypes:(int*)arg1 errorCode:(int*)arg2 ;
++(BOOL)_iMessage_canSendMessageWithMediaObjectTypes:(int*)arg1 errorCode:(int*)arg2 ;
 +(id)_iMessage_localizedErrorForReason:(int)arg1 ;
-+(unsigned)_iMessage_maxTransferFileSizeForWiFi:(char)arg1 ;
++(unsigned)_iMessage_maxTransferFileSizeForWiFi:(BOOL)arg1 ;
 +(int)_sms_maxAttachmentCount;
-+(char)_sms_canSendMessageWithMediaObjectTypes:(int*)arg1 errorCode:(int*)arg2 ;
-+(char)_sms_mediaObjectPassesRestriction:(id)arg1 ;
-+(char)_sms_mediaObjectPassesDurationCheck:(id)arg1 ;
++(BOOL)_sms_canSendMessageWithMediaObjectTypes:(int*)arg1 errorCode:(int*)arg2 ;
++(BOOL)_sms_mediaObjectPassesRestriction:(id)arg1 ;
++(BOOL)_sms_mediaObjectPassesDurationCheck:(id)arg1 ;
 +(id)_sms_localizedErrorForReason:(int)arg1 ;
 -(NSArray *)recipients;
 -(void)setRecipients:(NSArray *)arg1 ;
@@ -263,20 +263,20 @@
 -(id)thumbnail;
 -(NSString *)displayName;
 -(IMChat *)chat;
--(char)isGroupConversation;
--(char)supportsMutatingGroupMembers;
--(char)canLeave;
--(char)hasLeft;
+-(BOOL)isGroupConversation;
+-(BOOL)supportsMutatingGroupMembers;
+-(BOOL)canLeave;
+-(BOOL)hasLeft;
 -(IMService *)sendingService;
 -(id)copyForPendingConversation;
--(char)canInsertMoreRecipients;
--(char)forceMMS;
--(void)setForceMMS:(char)arg1 ;
--(char)shouldShowCharacterCount;
--(char)isPending;
--(char)sendButtonColor;
+-(BOOL)canInsertMoreRecipients;
+-(BOOL)forceMMS;
+-(void)setForceMMS:(BOOL)arg1 ;
+-(BOOL)shouldShowCharacterCount;
+-(BOOL)isPending;
+-(BOOL)sendButtonColor;
 -(unsigned)recipientCount;
--(char)canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
+-(BOOL)canAcceptMediaObjectType:(int)arg1 givenMediaObjects:(id)arg2 ;
 -(void)unmute;
 -(void)setMutedUntilDate:(id)arg1 ;
 -(void)removeRecipientHandles:(id)arg1 ;
@@ -289,19 +289,19 @@
 -(void)loadAllMessages;
 -(void)refreshServiceForSending;
 -(void)setPendingComposeRecipients:(id)arg1 ;
--(char)hasUnreadMessages;
+-(BOOL)hasUnreadMessages;
 -(id)displayNameForMediaObjects:(id)arg1 subject:(id)arg2 ;
--(void)sendMessage:(id)arg1 newComposition:(char)arg2 ;
--(void)setIgnoringTypingUpdates:(char)arg1 ;
+-(void)sendMessage:(id)arg1 newComposition:(BOOL)arg2 ;
+-(void)setIgnoringTypingUpdates:(BOOL)arg1 ;
 -(id)messageWithComposition:(id)arg1 ;
 -(double)maxTrimDurationForMediaType:(int)arg1 ;
 -(void)resetCaches;
 -(NSArray *)pendingHandles;
 -(NSArray *)pendingEntities;
--(char)canSendToRecipients:(id)arg1 alertIfUnable:(char)arg2 ;
--(char)canSendComposition:(id)arg1 error:(id*)arg2 ;
--(void)setLocalUserIsRecording:(char)arg1 ;
--(void)setLocalUserIsTyping:(char)arg1 ;
+-(BOOL)canSendToRecipients:(id)arg1 alertIfUnable:(BOOL)arg2 ;
+-(BOOL)canSendComposition:(id)arg1 error:(id*)arg2 ;
+-(void)setLocalUserIsRecording:(BOOL)arg1 ;
+-(void)setLocalUserIsTyping:(BOOL)arg1 ;
 -(void)deleteAllMessages;
 -(void)acceptTransfer:(id)arg1 ;
 -(id)initWithChat:(id)arg1 ;
@@ -320,59 +320,59 @@
 -(void)resetNameCaches;
 -(void)resetThumbnailCaches;
 -(void)updateGroupThumbnailIfNeeded;
--(char)isDowngraded;
+-(BOOL)isDowngraded;
 -(int)maximumRecipientsForSendingService;
 -(void)_clearTypingIndicatorsIfNecessary;
--(void)_deleteAllMessagesAndRemoveGroup:(char)arg1 ;
+-(void)_deleteAllMessagesAndRemoveGroup:(BOOL)arg1 ;
 -(NSArray *)frequentReplies;
 -(void)setLimitToLoad:(unsigned)arg1 ;
 -(void)reloadIfNeeded;
 -(void)enumerateMessagesWithOptions:(unsigned)arg1 usingBlock:(/*^block*/id)arg2 ;
--(char)_sms_canSendToRecipients:(id)arg1 alertIfUnable:(char)arg2 ;
--(char)_iMessage_canSendToRecipients:(id)arg1 alertIfUnable:(char)arg2 ;
--(char)_accountIsOperational:(id)arg1 forService:(id)arg2 ;
+-(BOOL)_sms_canSendToRecipients:(id)arg1 alertIfUnable:(BOOL)arg2 ;
+-(BOOL)_iMessage_canSendToRecipients:(id)arg1 alertIfUnable:(BOOL)arg2 ;
+-(BOOL)_accountIsOperational:(id)arg1 forService:(id)arg2 ;
 -(void)_recordRecentContact;
--(void)sendMessage:(id)arg1 onService:(id)arg2 newComposition:(char)arg3 ;
--(char)_chatSupportsTypingIndicators;
--(char)localUserIsTyping;
--(char)localUserIsRecording;
+-(void)sendMessage:(id)arg1 onService:(id)arg2 newComposition:(BOOL)arg3 ;
+-(BOOL)_chatSupportsTypingIndicators;
+-(BOOL)localUserIsTyping;
+-(BOOL)localUserIsRecording;
 -(NSArray *)recipientStrings;
--(char)_sms_supportsCharacterCountForAddresses:(id)arg1 ;
--(char)_iMessage_supportsCharacterCountForAddresses:(id)arg1 ;
+-(BOOL)_sms_supportsCharacterCountForAddresses:(id)arg1 ;
+-(BOOL)_iMessage_supportsCharacterCountForAddresses:(id)arg1 ;
 -(id)_nameForHandle:(id)arg1 ;
 -(id)_headerTitleForPendingMediaObjects:(id)arg1 subject:(id)arg2 onService:(id)arg3 ;
 -(id)_headerTitleForService:(id)arg1 ;
--(char)isIgnoringTypingUpdates;
--(char)_handleIsForThisConversation:(id)arg1 ;
--(char)noAvailableServices;
--(char)isToEmailAddress;
+-(BOOL)isIgnoringTypingUpdates;
+-(BOOL)_handleIsForThisConversation:(id)arg1 ;
+-(BOOL)noAvailableServices;
+-(BOOL)isToEmailAddress;
 -(void)loadFrequentReplies;
 -(void)loadMoreMessages;
--(char)_chatHasValidAccount:(id)arg1 forService:(id)arg2 ;
+-(BOOL)_chatHasValidAccount:(id)arg1 forService:(id)arg2 ;
 -(void)updateUserActivityWithComposition:(id)arg1 ;
 -(unsigned)disclosureAtomStyle;
--(char)outgoingBubbleColor;
+-(BOOL)outgoingBubbleColor;
 -(NSString *)serviceDisplayName;
--(char)needsReload;
+-(BOOL)needsReload;
 -(NSArray *)thumbnailOrderABRecordIDs;
 -(void)setThumbnailOrderABRecordIDs:(NSArray *)arg1 ;
--(char)_sms_willSendMMSByDefaultForAddresses:(id)arg1 ;
+-(BOOL)_sms_willSendMMSByDefaultForAddresses:(id)arg1 ;
 -(id)__generateThumbnailOfDiameter:(float)arg1 withRecipientImage:(id)arg2 andOtherRecipient:(id)arg3 ;
 -(id)_messageOrderedABRecordIDsForChatItems:(id)arg1 ;
 -(id)__generateThumbnailOfDiameter:(float)arg1 withRecordIDs:(id)arg2 recipientCount:(unsigned)arg3 ;
 -(void)_postThumbnailChanged;
 -(void)setDisplayName:(NSString *)arg1 ;
--(char)hasDisplayName;
+-(BOOL)hasDisplayName;
 -(unsigned)unreadCount;
--(char)isMuted;
+-(BOOL)isMuted;
 -(NSString *)groupID;
--(char)isPlaceholder;
--(char)buttonColor;
+-(BOOL)isPlaceholder;
+-(BOOL)buttonColor;
 @end
 
 @interface CKConversationList : NSObject
 +(id)sharedConversationList;
--(id)conversationForHandles:(id)arg1 displayName:(id)arg2 joinedChatsOnly:(char)arg3 create:(char)arg4;
+-(id)conversationForHandles:(id)arg1 displayName:(id)arg2 joinedChatsOnly:(BOOL)arg3 create:(BOOL)arg4;
 -(id)conversations;
 -(id)_conversationForChat:(id)arg1;
 -(id)activeConversations;
@@ -424,6 +424,7 @@
 
 @interface CKTranscriptController : UIViewController
 -(void)setConversation:(CKConversation *)arg1;
+-(void)sendComposition:(id)arg1;
 @end
 
 

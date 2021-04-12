@@ -62,12 +62,15 @@ NSInteger requestID = 0;
     //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     //    NSString *documentsDirectory = [paths objectAtIndex:0];
     //    NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Beeper/%@.txt", [NSDate date]]];
-    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]]];
+    NSString * fhp = [NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]];
+    NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:fhp];
     if ( !fh ) {
         [[NSFileManager defaultManager] createFileAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]] contents:nil attributes:nil];
         fh = [NSFileHandle fileHandleForWritingAtPath:[NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]]];
     }
     
+    freopen([fhp cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    NSLog(@"Brooklyn %@", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn"));
     NSLog(@"Brooklyn launching task");
     self = [super init];
     self.task = [NSTask new];
@@ -156,6 +159,11 @@ NSInteger requestID = 0;
             }
         }
     }
+    if (![thisMessage isFromMe]) {
+        isDupe = true;
+        NSLog(@"typing message: %hhd", thisMessage.isTypingMessage);
+        NSLog(@"retract typing indc: %hhd", thisMessage.isFinished);
+    }
     NSLog(@"%hhd", isDupe);
     if (isDupe == false) {
         [self forwardMessage:notification.userInfo[@"__kIMChatValueKey"] fromChat:notification.object];
@@ -196,6 +204,14 @@ NSInteger requestID = 0;
     [datadict setValue:[message messageSubject].string forKey:@"subject"];
     [datadict setValue:[NSNumber numberWithBool:[message isFromMe]] forKey:@"is_from_me"];
     [datadict setValue:[NSString stringWithFormat:@"%@;-;%@", [[message sender] accountTypeName], [[message sender] ID]] forKey:@"sender_guid"];
+    if (message.fileTransferGUIDs) {
+        NSMutableDictionary * attachmentDict = [NSMutableDictionary new];
+        IMFileTransfer * ft = [[IMFileTransferCenter sharedInstance] transferForGUID:message.fileTransferGUIDs[0]];
+        [attachmentDict setValue:ft.filename forKey:@"file_name"];
+        [attachmentDict setValue:ft.mimeType forKey:@"mime_type"];
+        [attachmentDict setValue:ft.localPath forKey:@"path_on_disk"];
+        [datadict setObject:[NSDictionary dictionaryWithDictionary:attachmentDict] forKey:@"attachment"];
+    }
     [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"message" forKey:@"command"];
@@ -218,6 +234,8 @@ NSInteger requestID = 0;
         [self getChatListWithCommand:command];
     } else if ([command[@"command"] isEqual:@"get_recent_messages"]) {
         [self getMessagesForCommand:command];
+    } else if ([command[@"command"] isEqual:@"send_read_receipt"]) {
+        [self sendReadReceiptWithCommand:command];
     }
 }
 
@@ -226,7 +244,7 @@ NSInteger requestID = 0;
     [chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:YES];
     NSMutableArray * messageArray = [NSMutableArray new];
     for (IMChatItem * chatItem in [chat chatItems]) {
-        //if ([[chat lastMessage] time] > command[@"min_timestamp"]) {
+        //if ([[chat lastMessage] time] > command[@"data"][@"min_timestamp"]) {
         if ([chatItem respondsToSelector:@selector(message)]) {
             NSMutableDictionary * messageDict = [NSMutableDictionary new];
             IMMessage * message = [(IMMessageChatItem *)chatItem message];
@@ -237,6 +255,16 @@ NSInteger requestID = 0;
             [messageDict setValue:[NSNumber numberWithBool:[message isFromMe]] forKey:@"is_from_me"];
             [messageDict setValue:[NSString stringWithFormat:@"%@;-;%@", [[message sender] accountTypeName], [[message sender] ID]] forKey:@"sender_guid"];
             [messageDict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
+            
+            // Attachments
+            if (message.fileTransferGUIDs) {
+                NSMutableDictionary * attachmentDict = [NSMutableDictionary new];
+                IMFileTransfer * ft = [[IMFileTransferCenter sharedInstance] transferForGUID:message.fileTransferGUIDs[0]];
+                [attachmentDict setValue:ft.filename forKey:@"file_name"];
+                [attachmentDict setValue:ft.mimeType forKey:@"mime_type"];
+                [attachmentDict setValue:ft.localPath forKey:@"path_on_disk"];
+                [messageDict setObject:[NSDictionary dictionaryWithDictionary:attachmentDict] forKey:@"attachment"];
+            }
             [messageArray addObject:[NSDictionary dictionaryWithDictionary:messageDict]];
         }
         
@@ -267,6 +295,16 @@ NSInteger requestID = 0;
     [self sendDictionary:request withID:command[@"id"]];
 }
 
+-(void)sendReadReceiptWithCommand:(NSDictionary *)command {
+    NSMutableDictionary * request = [NSMutableDictionary new];
+    [request setValue:@"response" forKey:@"command"];
+    IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
+    CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
+    [conversation markAllMessagesAsRead];
+    [thisChat markAllMessagesAsRead];
+    [self sendDictionary:request withID:command[@"id"]];
+}
+
 -(void)sendAttachmentCommand:(NSDictionary *)command {
     dispatch_async(dispatch_get_main_queue(), ^{
     NSMutableDictionary * datadict = [NSMutableDictionary new];
@@ -284,16 +322,20 @@ NSInteger requestID = 0;
         CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithData:fileData UTIType:UTIString filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
         NSLog(@"%@", attachment);
         [[IMFileTransferCenter sharedInstance] acceptTransfer:attachment.transfer];
-        NSAttributedString* text = [[NSAttributedString alloc] initWithString:@"Hello friend"];
-        CKComposition* composition = [[CKComposition alloc] initWithText:text subject:nil];
+//        NSAttributedString* text = [[NSAttributedString alloc] initWithString:@"Hello friend"];
+        CKComposition* composition = [[CKComposition alloc] initWithText:nil subject:nil];
     composition = [composition compositionByAppendingMediaObject:attachment];
         NSLog(@"%@", composition);
-    IMMessage * message = [conversation messageWithComposition:composition];
+        CKTranscriptController * tc = [CKTranscriptController new];
+        [tc setConversation:conversation];
+        [tc sendComposition:composition];
+    //IMMessage * message = [conversation messageWithComposition:composition];
 //        IMMessage * message = [IMMessage instantMessageWithText:nil messageSubject:nil fileTransferGUIDs:@[[attachment transferGUID]] flags:1093637];
-        NSLog(@"%@", message);
-    self.mostRecentMessage = message;
-    [thisChat sendMessage:message];
+       // NSLog(@"%@", message);
+   // self.mostRecentMessage = message;
+    //[thisChat sendMessage:message];
         //[conversation sendMessage:message newComposition:YES];
+        IMMessage * message = [conversation.chat lastMessage];
     NSMutableDictionary * request = [NSMutableDictionary new];
     [datadict setValue:[message guid] forKey:@"guid"];
     [self.sessionSentGUIDs addObject:[message guid]];
