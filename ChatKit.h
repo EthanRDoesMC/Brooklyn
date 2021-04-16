@@ -380,6 +380,7 @@
 -(int)unreadCount;
 -(id)_copyEntitiesForAddressStrings:(id)arg1;
 -(void)deleteConversation:(id)arg1;
+-(id)conversationForExistingChatWithGUID:(id)arg1;
 @end
 
 @interface CKIMComposeRecipient : NSObject {

@@ -58,6 +58,11 @@
 	<true/>
 	<key>NSContactsUsageDescription</key>
 	<string>Brooklyn uses contacts directly from the Messages app to show their details in Beeper.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>continuous</string>
+		<string>unboundedTaskCompletion</string>
+	</array>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>

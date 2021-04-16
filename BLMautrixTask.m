@@ -10,6 +10,7 @@
 #import "ChatKit.h"
 #import "UIImage+Base64.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <CoreFoundation/CoreFoundation.h>
 
 // you're a god among men, kirb, but we need consolidation
 // all credits go to https://github.com/hbang/libcephei/blob/master/HBOutputForShellCommand.m
@@ -97,8 +98,8 @@ NSInteger requestID = 0;
             if (!self->_outputString) {
                 self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")]; //otherwise we're appending to nil
             }
-            [fh seekToEndOfFile];
-            [fh writeData:data];
+//            [fh seekToEndOfFile];
+//            [fh writeData:data];
             self.outputString = [[self outputString] stringByAppendingString:string];
             [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
             [self handleCommand:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
@@ -113,8 +114,8 @@ NSInteger requestID = 0;
             if (!self->_outputString) {
                 self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")];
             }
-            [fh seekToEndOfFile];
-            [fh writeData:errdata];
+//            [fh seekToEndOfFile];
+//            [fh writeData:errdata];
             self.outputString = [[self outputString] stringByAppendingString:errstring];
             [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
         });
@@ -183,7 +184,7 @@ NSInteger requestID = 0;
     //NSString *jsonString = [[NSString alloc] initWithData:dataForSending encoding:NSUTF8StringEncoding];
     //NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:dataForSending options:0 error:nil]);
     //NSLog(@"%@", jsonString);
-    NSLog(@"Writing data");
+    NSLog(@"Writing data:%@", dictionary);
     [[self.task.standardInput fileHandleForWriting] writeData:dataForSending];
 }
 
@@ -216,7 +217,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"message" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
-    NSLog(@"Forwarding a message");
+    NSLog(@"Forwarding a message:%@ from chat:%@", message, chat);
     [self sendDictionary:request];
 }
 
@@ -273,7 +274,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSArray arrayWithArray:messageArray] forKey:@"data"];
-    NSLog(@"Got messages; returning...");
+    NSLog(@"Got messages:%@", messageArray);
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -291,7 +292,7 @@ NSInteger requestID = 0;
     [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
-    NSLog(@"Sent message; telling bridge...");
+    NSLog(@"Sent message:%@, telling bridge...",message);
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -303,39 +304,39 @@ NSInteger requestID = 0;
     [conversation markAllMessagesAsRead];
     [thisChat markAllMessagesAsRead];
     [self sendDictionary:request withID:command[@"id"]];
+    NSLog(@"Read receipt for:%@",thisChat);
 }
 
 -(void)sendAttachmentCommand:(NSDictionary *)command {
     dispatch_async(dispatch_get_main_queue(), ^{
+        if ([IMDaemonController.sharedController connectToDaemon]) {
     NSMutableDictionary * datadict = [NSMutableDictionary new];
-    IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
-    CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
+    //IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
+    CKConversation * conversation = [CKConversationList.sharedConversationList conversationForExistingChatWithGUID:command[@"data"][@"chat_guid"]];
     
     //CKMediaObject* object = [[CKMediaObjectManager sharedInstance] mediaObjectWithFileURL:fileUrl filename:nil transcoderUserInfo:nil attributionInfo:@{} hideAttachment:NO];
     
         //CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///private/var%@",command[@"data"][@"path_on_disk"]]] filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
         // thank you https://gist.github.com/ddeville/1527517
-        NSData * fileData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"/private/var%@",command[@"data"][@"path_on_disk"]]];
-        CFStringRef MIMEType = (__bridge CFStringRef)command[@"data"][@"mime_type"];
-        CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, MIMEType, NULL);
-        NSString *UTIString = (__bridge_transfer NSString *)UTI;
-        CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithData:fileData UTIType:UTIString filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
-        NSLog(@"%@", attachment);
-        [[IMFileTransferCenter sharedInstance] acceptTransfer:attachment.transfer];
+        //NSData * fileData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"/private/var%@",command[@"data"][@"path_on_disk"]]];
+        //CFStringRef MIMEType = (__bridge CFStringRef)command[@"data"][@"mime_type"];
+        //CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, MIMEType, NULL);
+        //NSString *UTIString = (__bridge_transfer NSString *)UTI;
+        //CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithData:fileData UTIType:UTIString filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
+            CKMediaObject * mediaObject = [CKMediaObjectManager.sharedInstance mediaObjectWithFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///private/var%@", command[@"data"][@"path_on_disk"]]] filename:command[@"data"][@"file_name"] transcoderUserInfo:@{}];
+        NSLog(@"%@", mediaObject);
+        //[[IMFileTransferCenter sharedInstance] acceptTransfer:attachment.transfer];
 //        NSAttributedString* text = [[NSAttributedString alloc] initWithString:@"Hello friend"];
-        CKComposition* composition = [[CKComposition alloc] initWithText:nil subject:nil];
-    composition = [composition compositionByAppendingMediaObject:attachment];
+        CKComposition* composition = [CKComposition compositionWithMediaObject:mediaObject subject:nil];
+            [conversation acceptTransfer:mediaObject.transfer];
         NSLog(@"%@", composition);
-        CKTranscriptController * tc = [CKTranscriptController new];
-        [tc setConversation:conversation];
-        [tc sendComposition:composition];
-    //IMMessage * message = [conversation messageWithComposition:composition];
+    IMMessage * message = [conversation messageWithComposition:composition];
 //        IMMessage * message = [IMMessage instantMessageWithText:nil messageSubject:nil fileTransferGUIDs:@[[attachment transferGUID]] flags:1093637];
-       // NSLog(@"%@", message);
+        NSLog(@"%@", message);
    // self.mostRecentMessage = message;
     //[thisChat sendMessage:message];
-        //[conversation sendMessage:message newComposition:YES];
-        IMMessage * message = [conversation.chat lastMessage];
+        [conversation sendMessage:message newComposition:YES];
+        //IMMessage * message = [conversation.chat lastMessage];
     NSMutableDictionary * request = [NSMutableDictionary new];
     [datadict setValue:[message guid] forKey:@"guid"];
     [self.sessionSentGUIDs addObject:[message guid]];
@@ -344,6 +345,7 @@ NSInteger requestID = 0;
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
     NSLog(@"Sent message; telling bridge...");
     [self sendDictionary:request withID:command[@"id"]];
+        }
     });
 }
 
@@ -365,7 +367,7 @@ NSInteger requestID = 0;
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
     //NSLog(@"member array: %@, dictionary: %@", memberArray, request);
-    NSLog(@"Got chat info, sending to bridge...");
+    NSLog(@"Got chat info:%@, sending to bridge...", memberArray);
     [self sendDictionary:request withID:command[@"id"]];
 }
 -(void)getContactInfoForCommand:(NSDictionary *)command {
@@ -396,8 +398,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
-    //NSLog(@"member array: %@, dictionary: %@", memberArray, request);
-    NSLog(@"Got contact info, sending to bridge...");
+    NSLog(@"Got contact info:%@ sending to bridge...", datadict);
     [self sendDictionary:request withID:command[@"id"]];
 }
 
@@ -415,7 +416,7 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSArray arrayWithArray:guidArray] forKey:@"data"];
-    NSLog(@"Got chat list, returning...");
+    NSLog(@"Got chats list:%@, returning...", chatArray);
     [self sendDictionary:request withID:command[@"id"]];
 }
 @end

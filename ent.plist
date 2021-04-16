@@ -6,6 +6,18 @@
 	<array>
 		<string>kTCCServiceAddressBook</string>
 	</array>
+	<key>com.apple.private.game-center</key>
+	<array>
+		<string>Account</string>
+	</array>
+	<key>com.apple.private.game-center.bypass-authentication</key>
+	<true/>
+	<key>com.apple.mobile.deleted.AllowFreeSpace</key>
+	<true/>
+	<key>com.apple.mobilemail.mailservices</key>
+	<true/>
+	<key>com.apple.springboard.opensensitiveurl</key>
+	<true/>
 	<key>platform-application</key>
 	<true/>
 	<key>com.apple.private.accounts.allaccounts</key>
@@ -46,5 +58,7 @@
 	<array>
 		<string>apple</string>
 	</array>
+	<key>com.apple.multitasking.unlimitedassertions</key>
+	<true/>
 </dict>
 </plist>
