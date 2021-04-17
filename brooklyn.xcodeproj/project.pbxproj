@@ -16,6 +16,14 @@
 		4F6808B325AEDEE500470DDB /* IMFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808AF25AEDEE500470DDB /* IMFoundation.framework */; };
 		4F6808B425AEDEE500470DDB /* MessageUI.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6808B025AEDEE500470DDB /* MessageUI.tbd */; };
 		4F6808B925AEE04700470DDB /* rubicon in Resources */ = {isa = PBXBuildFile; fileRef = 4F6808B825AEE04700470DDB /* rubicon */; };
+		4F6DB932262A6DE4001A3EE4 /* AppSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6DB931262A6DE4001A3EE4 /* AppSupport.framework */; };
+		4F6DB935262A6E98001A3EE4 /* CPDistributedMessagingCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F6DB934262A6E98001A3EE4 /* CPDistributedMessagingCenter.h */; };
+		4F6DB93A262A7A14001A3EE4 /* smshelper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F6DB937262A7A14001A3EE4 /* smshelper.plist */; };
+		4F6DB93B262A7A14001A3EE4 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 4F6DB938262A7A14001A3EE4 /* Makefile */; };
+		4F6DB93C262A7A14001A3EE4 /* Tweak.xm in Resources */ = {isa = PBXBuildFile; fileRef = 4F6DB939262A7A14001A3EE4 /* Tweak.xm */; };
+		4F6DB951262A9A27001A3EE4 /* rocketbootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F6DB950262A9A27001A3EE4 /* rocketbootstrap.h */; };
+		4F6DB954262A9A3D001A3EE4 /* bootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F6DB953262A9A3D001A3EE4 /* bootstrap.h */; };
+		4F6DB957262A9A87001A3EE4 /* librocketbootstrap.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6DB956262A9A87001A3EE4 /* librocketbootstrap.tbd */; };
 		4F8092D5261993C900A13658 /* brooklynsettings in Resources */ = {isa = PBXBuildFile; fileRef = 4F8092D4261993C900A13658 /* brooklynsettings */; };
 		4F8092E326199A8200A13658 /* brooklynbypass in Resources */ = {isa = PBXBuildFile; fileRef = 4F8092E226199A8200A13658 /* brooklynbypass */; };
 		4F82108C25A034C1005B9453 /* xchighlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F82108A25A034C1005B9453 /* xchighlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +43,7 @@
 		4F8D118125A572C100040303 /* ChatViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D117F25A572C100040303 /* ChatViewController.h */; platformFilter = ios; };
 		4F8D118225A572C100040303 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D118025A572C100040303 /* ChatViewController.m */; platformFilter = ios; };
 		4F975DFE260AF2F1001641BB /* BeeperAppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */; };
+		4F9897D5262A21AD007B580E /* IMDPersistence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9897D4262A21AD007B580E /* IMDPersistence.framework */; };
 		4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D49362604612E00A2BE48 /* LogViewController.h */; };
 		4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D49372604612E00A2BE48 /* LogViewController.m */; };
 		4F9D49452604727F00A2BE48 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D493D2604682500A2BE48 /* NSTask.h */; };
@@ -69,8 +78,16 @@
 		4F6808AE25AEDEE500470DDB /* ChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ChatKit.framework; sourceTree = "<group>"; };
 		4F6808AF25AEDEE500470DDB /* IMFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMFoundation.framework; sourceTree = "<group>"; };
 		4F6808B025AEDEE500470DDB /* MessageUI.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = MessageUI.tbd; sourceTree = "<group>"; };
-		4F6808B725AEDFC700470DDB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F6808B825AEE04700470DDB /* rubicon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = rubicon; sourceTree = "<group>"; };
+		4F6DB931262A6DE4001A3EE4 /* AppSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppSupport.framework; sourceTree = "<group>"; };
+		4F6DB934262A6E98001A3EE4 /* CPDistributedMessagingCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPDistributedMessagingCenter.h; sourceTree = "<group>"; };
+		4F6DB937262A7A14001A3EE4 /* smshelper.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = smshelper.plist; path = smshelper/smshelper.plist; sourceTree = "<group>"; };
+		4F6DB938262A7A14001A3EE4 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = smshelper/Makefile; sourceTree = "<group>"; };
+		4F6DB939262A7A14001A3EE4 /* Tweak.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tweak.xm; path = smshelper/Tweak.xm; sourceTree = "<group>"; };
+		4F6DB93F262A7A9D001A3EE4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F6DB950262A9A27001A3EE4 /* rocketbootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rocketbootstrap.h; sourceTree = "<group>"; };
+		4F6DB953262A9A3D001A3EE4 /* bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
+		4F6DB956262A9A87001A3EE4 /* librocketbootstrap.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = librocketbootstrap.tbd; sourceTree = "<group>"; };
 		4F6F81B0259EA92C00783287 /* BLNewChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLNewChatViewController.h; sourceTree = "<group>"; };
 		4F6F81B1259EA92C00783287 /* BLNewChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLNewChatViewController.m; sourceTree = "<group>"; };
 		4F70018525993B7000698E5C /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -99,6 +116,7 @@
 		4F8D118025A572C100040303 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		4F91D09425AEEB6700385427 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		4F975DFD260AF2F1001641BB /* BeeperAppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BeeperAppIcon.xcassets; sourceTree = "<group>"; };
+		4F9897D4262A21AD007B580E /* IMDPersistence.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IMDPersistence.framework; sourceTree = "<group>"; };
 		4F9D49362604612E00A2BE48 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
@@ -116,6 +134,9 @@
 			files = (
 				4F6808B425AEDEE500470DDB /* MessageUI.tbd in Frameworks */,
 				4F6808B325AEDEE500470DDB /* IMFoundation.framework in Frameworks */,
+				4F6DB932262A6DE4001A3EE4 /* AppSupport.framework in Frameworks */,
+				4F6DB957262A9A87001A3EE4 /* librocketbootstrap.tbd in Frameworks */,
+				4F9897D5262A21AD007B580E /* IMDPersistence.framework in Frameworks */,
 				4F6808B125AEDEE500470DDB /* IMCore.framework in Frameworks */,
 				4F6808B225AEDEE500470DDB /* ChatKit.framework in Frameworks */,
 			);
@@ -136,19 +157,32 @@
 		4F6808AC25AEDEE500470DDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F6DB931262A6DE4001A3EE4 /* AppSupport.framework */,
 				4F6808AD25AEDEE500470DDB /* IMCore.framework */,
 				4F6808AE25AEDEE500470DDB /* ChatKit.framework */,
+				4F9897D4262A21AD007B580E /* IMDPersistence.framework */,
 				4F6808AF25AEDEE500470DDB /* IMFoundation.framework */,
+				4F6DB956262A9A87001A3EE4 /* librocketbootstrap.tbd */,
 				4F6808B025AEDEE500470DDB /* MessageUI.tbd */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F6DB93E262A7A8A001A3EE4 /* SMSHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4F6DB938262A7A14001A3EE4 /* Makefile */,
+				4F6DB937262A7A14001A3EE4 /* smshelper.plist */,
+				4F6DB939262A7A14001A3EE4 /* Tweak.xm */,
+			);
+			name = SMSHelper;
 			sourceTree = "<group>";
 		};
 		4F70017E25993B7000698E5C = {
 			isa = PBXGroup;
 			children = (
 				4F8092E126199A7200A13658 /* Bypass */,
-				4F6808B725AEDFC700470DDB /* README.md */,
+				4F6DB93E262A7A8A001A3EE4 /* SMSHelper */,
 				4FAB0ABB25D64376007448DA /* Headers */,
 				4FAB0AB125D64192007448DA /* Application */,
 				4FFD1ED12606EF5000D535B0 /* Mautrix */,
@@ -160,6 +194,7 @@
 		4F8092E126199A7200A13658 /* Bypass */ = {
 			isa = PBXGroup;
 			children = (
+				4F6DB93F262A7A9D001A3EE4 /* README.md */,
 				4F8092E226199A8200A13658 /* brooklynbypass */,
 			);
 			name = Bypass;
@@ -266,6 +301,9 @@
 			isa = PBXGroup;
 			children = (
 				4F7001992599756800698E5C /* IMCore.h */,
+				4F6DB934262A6E98001A3EE4 /* CPDistributedMessagingCenter.h */,
+				4F6DB950262A9A27001A3EE4 /* rocketbootstrap.h */,
+				4F6DB953262A9A3D001A3EE4 /* bootstrap.h */,
 				4F9D493D2604682500A2BE48 /* NSTask.h */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
 				4F360C2A26167E9100DCB726 /* Categories */,
@@ -313,6 +351,7 @@
 			files = (
 				4F82108C25A034C1005B9453 /* xchighlight.h in Headers */,
 				4F9D49452604727F00A2BE48 /* NSTask.h in Headers */,
+				4F6DB954262A9A3D001A3EE4 /* bootstrap.h in Headers */,
 				4F360C2626167D5F00DCB726 /* UIImage+Base64.h in Headers */,
 				4F8D117625A5314600040303 /* SendMessageController.h in Headers */,
 				4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */,
@@ -324,7 +363,9 @@
 				4F8210AE25A035F8005B9453 /* BLAppDelegate.h in Headers */,
 				4F8210AF25A035F8005B9453 /* BLNewChatViewController.h in Headers */,
 				4FFD1ED42606EF8200D535B0 /* BLMautrixTask.h in Headers */,
+				4F6DB935262A6E98001A3EE4 /* CPDistributedMessagingCenter.h in Headers */,
 				4F8D118125A572C100040303 /* ChatViewController.h in Headers */,
+				4F6DB951262A9A27001A3EE4 /* rocketbootstrap.h in Headers */,
 				4F8210B125A035F8005B9453 /* BrooklynBridge.h in Headers */,
 				4F8210B025A035F8005B9453 /* BLRootViewController.h in Headers */,
 			);
@@ -335,7 +376,7 @@
 /* Begin PBXLegacyTarget section */
 		4F70018325993B7000698E5C /* brooklyn */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "clean do";
 			buildConfigurationList = 4F70018D25993B7000698E5C /* Build configuration list for PBXLegacyTarget "brooklyn" */;
 			buildPhases = (
 			);
@@ -407,9 +448,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F8092E326199A8200A13658 /* brooklynbypass in Resources */,
+				4F6DB93A262A7A14001A3EE4 /* smshelper.plist in Resources */,
 				4F6808B925AEE04700470DDB /* rubicon in Resources */,
 				4F8092D5261993C900A13658 /* brooklynsettings in Resources */,
 				4F975DFE260AF2F1001641BB /* BeeperAppIcon.xcassets in Resources */,
+				4F6DB93C262A7A14001A3EE4 /* Tweak.xm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +469,7 @@
 				4F8D118225A572C100040303 /* ChatViewController.m in Sources */,
 				4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */,
 				4F82109825A034CF005B9453 /* BLNewChatViewController.m in Sources */,
+				4F6DB93B262A7A14001A3EE4 /* Makefile in Sources */,
 				4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */,
 				4F82109A25A034CF005B9453 /* BLRootViewController.m in Sources */,
 				4F360C2726167D5F00DCB726 /* UIImage+Base64.m in Sources */,

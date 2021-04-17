@@ -383,3 +383,11 @@
 -(void)setTotalBytes:(unsigned long long)arg1 ;
 -(NSDate *)startDate;
 @end
+
+@interface IMDPersistentAttachmentController : NSObject
++(id)sharedInstance;
+-(id)_persistentPathForTransfer:(id)arg1 ;
+-(id)saveAttachmentForTransfer:(id)arg1 ;
+-(char)deleteAttachmentForTransfer:(id)arg1 ;
+-(char)cleanseOrphanedFileTransfers;
+@end

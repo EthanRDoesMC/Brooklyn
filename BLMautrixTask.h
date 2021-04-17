@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "NSTask.h"
 #import "IMCore.h"
+#import "CPDistributedMessagingCenter.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BLMautrixTask : NSObject
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSPipe * writePipe;
 @property (strong, nonatomic) NSMutableArray * sessionSentGUIDs;
 @property (strong, nonatomic) IMMessage * mostRecentMessage;
+@property (strong, nonatomic) CPDistributedMessagingCenter * messageCenter;
 +(id)sharedTask;
 -(id)initAndLaunch;
 -(void)sendPing;

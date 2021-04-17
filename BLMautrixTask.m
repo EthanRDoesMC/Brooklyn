@@ -11,6 +11,12 @@
 #import "UIImage+Base64.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreFoundation/CoreFoundation.h>
+#import "CPDistributedMessagingCenter.h"
+#import "rocketbootstrap.h"
+
+@interface UIApplication (BLSMSHelper)
+-(id)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
+@end
 
 // you're a god among men, kirb, but we need consolidation
 // all credits go to https://github.com/hbang/libcephei/blob/master/HBOutputForShellCommand.m
@@ -63,6 +69,9 @@ NSInteger requestID = 0;
     //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     //    NSString *documentsDirectory = [paths objectAtIndex:0];
     //    NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Beeper/%@.txt", [NSDate date]]];
+    //self.messageCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
+    [[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES];
+#ifdef SAVELOGS
     NSString * fhp = [NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]];
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:fhp];
     if ( !fh ) {
@@ -71,6 +80,7 @@ NSInteger requestID = 0;
     }
     
     freopen([fhp cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+#endif
     NSLog(@"Brooklyn %@", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn"));
     NSLog(@"Brooklyn launching task");
     self = [super init];
@@ -93,14 +103,13 @@ NSInteger requestID = 0;
     [[self.task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
         NSData *data = [file availableData];
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"mautrix-imessage sent output:%@", string);
+        NSLog(@"mautrix-imessage sent output:%@", string); //writes to log file as well. neat!
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self->_outputString) {
                 self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")]; //otherwise we're appending to nil
             }
-//            [fh seekToEndOfFile];
-//            [fh writeData:data];
             self.outputString = [[self outputString] stringByAppendingString:string];
+            // i'd like to replace this way of outputting the log by reading directly from the file, but i only just learned about file handles, so let's be real here: if I did it now (4/16) it would only make things slower
             [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
             [self handleCommand:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
         });
@@ -114,8 +123,8 @@ NSInteger requestID = 0;
             if (!self->_outputString) {
                 self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")];
             }
-//            [fh seekToEndOfFile];
-//            [fh writeData:errdata];
+            //            [fh seekToEndOfFile];
+            //            [fh writeData:errdata];
             self.outputString = [[self outputString] stringByAppendingString:errstring];
             [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
         });
@@ -308,45 +317,17 @@ NSInteger requestID = 0;
 }
 
 -(void)sendAttachmentCommand:(NSDictionary *)command {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([IMDaemonController.sharedController connectToDaemon]) {
-    NSMutableDictionary * datadict = [NSMutableDictionary new];
-    //IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
-    CKConversation * conversation = [CKConversationList.sharedConversationList conversationForExistingChatWithGUID:command[@"data"][@"chat_guid"]];
+    //if ([[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES]) //{
     
-    //CKMediaObject* object = [[CKMediaObjectManager sharedInstance] mediaObjectWithFileURL:fileUrl filename:nil transcoderUserInfo:nil attributionInfo:@{} hideAttachment:NO];
-    
-        //CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///private/var%@",command[@"data"][@"path_on_disk"]]] filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
-        // thank you https://gist.github.com/ddeville/1527517
-        //NSData * fileData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"/private/var%@",command[@"data"][@"path_on_disk"]]];
-        //CFStringRef MIMEType = (__bridge CFStringRef)command[@"data"][@"mime_type"];
-        //CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, MIMEType, NULL);
-        //NSString *UTIString = (__bridge_transfer NSString *)UTI;
-        //CKMediaObject * attachment = [[CKMediaObjectManager sharedInstance] mediaObjectWithData:fileData UTIType:UTIString filename:command[@"data"][@"file_name"] transcoderUserInfo:nil];
-            CKMediaObject * mediaObject = [CKMediaObjectManager.sharedInstance mediaObjectWithFileURL:[NSURL URLWithString:[NSString stringWithFormat:@"file:///private/var%@", command[@"data"][@"path_on_disk"]]] filename:command[@"data"][@"file_name"] transcoderUserInfo:@{}];
-        NSLog(@"%@", mediaObject);
-        //[[IMFileTransferCenter sharedInstance] acceptTransfer:attachment.transfer];
-//        NSAttributedString* text = [[NSAttributedString alloc] initWithString:@"Hello friend"];
-        CKComposition* composition = [CKComposition compositionWithMediaObject:mediaObject subject:nil];
-            [conversation acceptTransfer:mediaObject.transfer];
-        NSLog(@"%@", composition);
-    IMMessage * message = [conversation messageWithComposition:composition];
-//        IMMessage * message = [IMMessage instantMessageWithText:nil messageSubject:nil fileTransferGUIDs:@[[attachment transferGUID]] flags:1093637];
-        NSLog(@"%@", message);
-   // self.mostRecentMessage = message;
-    //[thisChat sendMessage:message];
-        [conversation sendMessage:message newComposition:YES];
-        //IMMessage * message = [conversation.chat lastMessage];
-    NSMutableDictionary * request = [NSMutableDictionary new];
-    [datadict setValue:[message guid] forKey:@"guid"];
-    [self.sessionSentGUIDs addObject:[message guid]];
-    [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
-    [request setValue:@"response" forKey:@"command"];
-    [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
+    NSDictionary * message = @{ @"path_on_disk" : command[@"data"][@"path_on_disk"], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
+    NSDictionary *reply;
+        CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn.smsipc"];
+        rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
+    reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message];
+    [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
     NSLog(@"Sent message; telling bridge...");
-    [self sendDictionary:request withID:command[@"id"]];
-        }
-    });
+    [self sendDictionary:[NSDictionary dictionaryWithDictionary:reply[@"request"]] withID:command[@"id"]];
+    //}
 }
 
 -(void)respondWithChatInfoForCommand:(NSDictionary *)command {

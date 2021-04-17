@@ -7,7 +7,8 @@ APPLICATION_NAME = Brooklyn
 
 Brooklyn_FILES = $(wildcard *.m) $(wildcard *.xm)
 Brooklyn_FRAMEWORKS = UIKit CoreGraphics MessageUI
-Brooklyn_PRIVATE_FRAMEWORKS = IMCore ChatKit IMFoundation
+Brooklyn_PRIVATE_FRAMEWORKS = IMCore ChatKit IMFoundation IMDPersistence AppSupport
+Brooklyn_LIBRARIES = rocketbootstrap
 Brooklyn_CFLAGS = -fobjc-arc
 Brooklyn_CODESIGN_FLAGS = -Sent.plist
 
@@ -19,4 +20,5 @@ before-all::
 SUBPROJECTS += rubicon
 SUBPROJECTS += brooklynsettings
 SUBPROJECTS += brooklynbypass
+SUBPROJECTS += smshelper
 include $(THEOS_MAKE_PATH)/aggregate.mk
