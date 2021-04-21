@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat;
 -(void)getMessagesForCommand:(NSDictionary *)command;
 -(void)sendReadReceiptWithCommand:(NSDictionary *)command;
+-(BOOL)checkIfRunning:(NSString *)bundle_id;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,10 @@
 #import "CPDistributedMessagingCenter.h"
 #import "rocketbootstrap.h"
 
+#ifndef DEBUG
+#define NSLog(...);
+#endif
+
 @interface UIApplication (BLSMSHelper)
 -(BOOL)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
 @end
@@ -111,7 +115,11 @@ NSInteger requestID = 0;
             self.outputString = [[self outputString] stringByAppendingString:string];
             // i'd like to replace this way of outputting the log by reading directly from the file, but i only just learned about file handles, so let's be real here: if I did it now (4/16) it would only make things slower
             [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
-            [self handleCommand:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+            NSArray * commands = [string componentsSeparatedByString:@"\n"];
+            for (NSString * command in commands) {
+                [self handleCommand:[NSJSONSerialization JSONObjectWithData:[command dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]];
+            }
+            
         });
     }];
     self.task.standardError = [NSPipe pipe];
@@ -185,7 +193,9 @@ NSInteger requestID = 0;
     [self sendDictionary:dictionary withID:[NSNumber numberWithInteger:requestID]];
 }
 -(void)sendDictionary:(NSDictionary *)dictionary withID:(NSNumber *)msgID {
+    NSLog(@"Got data:%@ and ID:%@", dictionary, msgID);
     [dictionary setValue:msgID forKey: @"id"];
+    NSLog(@"made it past setValue");
     //    if (msgID > [NSNumber numberWithInteger:requestID]) {
     //        requestID = (NSInteger)msgID;
     //    }
@@ -318,22 +328,55 @@ NSInteger requestID = 0;
 
 -(void)sendAttachmentCommand:(NSDictionary *)command {
     if ([[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES]) {
+        NSLog(@"Launched successfully");
+        NSDictionary * message = @{ @"path_on_disk" : command[@"data"][@"path_on_disk"], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
+        NSLog(@"Outgoing user info: %@", message);
+        NSDictionary *reply;
+        while (![self checkIfRunning:@"MobileSMS"]) {
+            NSLog(@"sms isn't running!");
+            [self checkIfRunning:@"MobileSMS"];
+        }
+        NSLog(@"sms is running!");
+        
+            CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
+        NSLog(@"Ping!");
+            //[messagingCenter sendMessageName:@"sendAttachment" userInfo:nil];
+        while (![messagingCenter sendMessageAndReceiveReplyName:@"ping" userInfo:nil]) {
+            NSLog(@"Pain");
+            [messagingCenter sendMessageAndReceiveReplyName:@"ping" userInfo:nil];
+            NSLog(@"Ping!");
+        }
+        NSLog(@"POG");
+            rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
+            //[messagingCenter sendMessageName:@"sendAttachment" userInfo:[NSDictionary dictionaryWithDictionary:message]];
+            if ((reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message])) {
+                NSLog(@"Reply: %@", reply);
+                [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
+                NSLog(@"Sent message; telling bridge...");
+                NSLog(@"Reply: %@", reply);
+                NSLog(@"Command's ID: %@", command[@"id"]);
+                [self sendDictionary:[NSMutableDictionary dictionaryWithDictionary:@{ @"command": @"response", @"data": @{ @"guid": reply[@"sentGUID"], @"timestamp": reply[@"request"][@"data"][@"timestamp"] } }] withID:command[@"id"]];
+            
+        }
+    }
+}
+// source: https://github.com/iandwelker/libsmserver/blob/master/Tweak.xm
+- (BOOL)checkIfRunning:(NSString *)bundle_id { /// Would return a _Bool but you can only send `id`s through MRYIPC funcs
+                                               /// Just checks if a certain app with the bundle id `bundle_id` is running at all, background or foreground.
+    NSTask* task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+    [task setArguments:@[@"-c", [NSString stringWithFormat:@"ps aux | grep %@ | grep -v grep", bundle_id]]];
     
-    NSDictionary * message = @{ @"path_on_disk" : command[@"data"][@"path_on_disk"], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
-    NSDictionary *reply;
-        NSLog(@"aight we're here");
-    CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
-        NSLog(@"aight we're here");
-        [messagingCenter sendMessageName:@"sendAttachment" userInfo:nil];
-        NSLog(@"aight we're here");
-    //rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
-        //[messagingCenter sendMessageName:@"sendAttachment" userInfo:[NSDictionary dictionaryWithDictionary:message]];
-    if ((reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message])) {
-    [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
-    NSLog(@"Sent message; telling bridge...");
-    [self sendDictionary:[NSDictionary dictionaryWithDictionary:reply[@"request"]] withID:command[@"id"]];
-    }
-    }
+    NSPipe* pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    NSFileHandle* file = [pipe fileHandleForReading];
+    
+    [task launch];
+    
+    NSData* data = [file readDataToEndOfFile];
+    NSString* out = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSNumber * temp = out.length > 0 ? @1 : @0;
+    return [temp boolValue];
 }
 
 -(void)respondWithChatInfoForCommand:(NSDictionary *)command {
