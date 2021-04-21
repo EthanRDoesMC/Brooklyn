@@ -30,23 +30,23 @@
 
 - (void)loadView {
     [[BrooklynBridge sharedBridge] playLoadingChime];
-//    [self setDefinesPresentationContext:YES];
-//    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    //    [self setDefinesPresentationContext:YES];
+    //    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     
     [self reloadChats];
-	[super loadView];
-	self.title = @"Brooklyn";
+    [super loadView];
+    self.title = @"Brooklyn";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log" style:UIBarButtonItemStylePlain target:self action:@selector(viewLog:)];
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped:)];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [[UIApplication sharedApplication] _setBackgroundStyle:1];
     [self.tableView reloadData];
     //self.navigationItem.prompt = nil;
-//    [self.tableView setBackgroundColor:[UIColor clearColor]];
-//    []
-//    [self.tableView setSeparatorEffect:<#(API_AVAILABLE(ios(8.0)) UIVisualEffect *)#>]
+    //    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    //    []
+    //    [self.tableView setSeparatorEffect:<#(API_AVAILABLE(ios(8.0)) UIVisualEffect *)#>]
 }
 -(void)viewDidLoad {
     [super viewDidLoad];
@@ -93,7 +93,7 @@
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,21 +101,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *CellIdentifier = @"ChatCell";
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"ChatCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.backgroundColor = [UIColor clearColor];
-	}
+    }
     
-	return cell;
+    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-        CKConversation * chat = _chats[indexPath.row];
+    CKConversation * chat = _chats[indexPath.row];
     if (chat.isGroupConversation) {
-    cell.accessoryView = [[UIImageView alloc] initWithImage:chat.thumbnail];
+        cell.accessoryView = [[UIImageView alloc] initWithImage:chat.thumbnail];
         cell.accessoryView.contentMode = UIViewContentModeScaleAspectFit;
     }
     else {
@@ -126,12 +126,12 @@
     } else {
         cell.textLabel.text = chat.name;
     }
-        cell.detailTextLabel.text = chat.previewText;
-        if (chat.outgoingBubbleColor) {
-            cell.detailTextLabel.textColor = [UIColor colorWithRed: 0.10 green: 0.51 blue: 0.99 alpha: 1.00];
-        } else {
-            cell.detailTextLabel.textColor = [UIColor colorWithRed: 0.26 green: 0.80 blue: 0.28 alpha: 1.00];
-        }
+    cell.detailTextLabel.text = chat.previewText;
+    if (chat.outgoingBubbleColor) {
+        cell.detailTextLabel.textColor = [UIColor colorWithRed: 0.10 green: 0.51 blue: 0.99 alpha: 1.00];
+    } else {
+        cell.detailTextLabel.textColor = [UIColor colorWithRed: 0.26 green: 0.80 blue: 0.28 alpha: 1.00];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -152,7 +152,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [[BrooklynBridge sharedBridge] playLoadingChime];
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CKConversation * chat2 = _chats[indexPath.row];
     [chat2 loadAllMessages];
     ChatViewController * cvc = [[ChatViewController alloc] initWithConversation:chat2];

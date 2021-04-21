@@ -8,6 +8,7 @@
 +(id)sharedInstance;
 -(id)init;
 -(NSDictionary *)handleCommand:(NSString *)command withDictionary:(NSDictionary *)dictionary;
+@property (strong,nonatomic) CPDistributedMessagingCenter * messagingCenter;
 @end
 
 @implementation BLSMSHelper
@@ -16,17 +17,18 @@
     static BLSMSHelper *_sharedHelper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedHelper = [[BLSMSHelper new] init];
+        _sharedHelper = [[BLSMSHelper alloc] init];
     });
     
     return _sharedHelper;
 }
 
 -(id)init {
-    CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
-    rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
-    [messagingCenter runServerOnCurrentThread];
-    [messagingCenter registerForMessageName:@"sendAttachment" target:self selector:@selector(handleCommand:withDictionary:)];
+    NSLog(@"aight we're here");
+    self.messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
+    //rocketbootstrap_distributedmessagingcenter_apply(self.messagingCenter);
+    [self.messagingCenter runServerOnCurrentThread];
+    [self.messagingCenter registerForMessageName:@"sendAttachment" target:self selector:@selector(handleCommand:withDictionary:)];
     return [super init];
 }
 

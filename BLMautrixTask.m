@@ -15,7 +15,7 @@
 #import "rocketbootstrap.h"
 
 @interface UIApplication (BLSMSHelper)
--(id)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
+-(BOOL)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
 @end
 
 // you're a god among men, kirb, but we need consolidation
@@ -70,7 +70,7 @@ NSInteger requestID = 0;
     //    NSString *documentsDirectory = [paths objectAtIndex:0];
     //    NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Beeper/%@.txt", [NSDate date]]];
     //self.messageCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
-    [[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES];
+    //[[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES];
 #ifdef SAVELOGS
     NSString * fhp = [NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]];
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:fhp];
@@ -317,17 +317,23 @@ NSInteger requestID = 0;
 }
 
 -(void)sendAttachmentCommand:(NSDictionary *)command {
-    //if ([[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES]) //{
+    if ([[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES]) {
     
     NSDictionary * message = @{ @"path_on_disk" : command[@"data"][@"path_on_disk"], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
     NSDictionary *reply;
-        CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn.smsipc"];
-        rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
-    reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message];
+        NSLog(@"aight we're here");
+    CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
+        NSLog(@"aight we're here");
+        [messagingCenter sendMessageName:@"sendAttachment" userInfo:nil];
+        NSLog(@"aight we're here");
+    //rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
+        //[messagingCenter sendMessageName:@"sendAttachment" userInfo:[NSDictionary dictionaryWithDictionary:message]];
+    if ((reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message])) {
     [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
     NSLog(@"Sent message; telling bridge...");
     [self sendDictionary:[NSDictionary dictionaryWithDictionary:reply[@"request"]] withID:command[@"id"]];
-    //}
+    }
+    }
 }
 
 -(void)respondWithChatInfoForCommand:(NSDictionary *)command {

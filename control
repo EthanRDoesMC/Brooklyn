@@ -6,4 +6,4 @@ Description: Bridge for Beeper that interfaces with iMessage directly.
 Maintainer: Beeper
 Author: Beeper
 Section: Messaging
-Depends: mobilesubstrate (>= 0.9.6300), preferenceloader, com.rpetrich.rocketbootstrap (>= 1.0.2)
+Depends: mobilesubstrate (>= 0.9.6300), preferenceloader
