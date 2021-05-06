@@ -1,0 +1,45 @@
+stages:
+- build
+- deploy
+
+build:
+  tags:
+  - mac
+  stage: build
+  script:
+  - export PACKAGE_VERSION=$CI_PIPELINE_IID+$CI_COMMIT_REF_NAME
+  - make package
+  - mv packages/com.beeper.brooklyn_${PACKAGE_VERSION}_iphoneos-arm.deb .
+  artifacts:
+    paths:
+    - packages/com.beeper.brooklyn_*.deb
+
+repo:
+  stage: deploy
+  image: debian
+  script:
+  - dpkg-scanpackages packages/ > Packages
+  - cat Packages | gzip -9c > Packages.gz
+  - PKGS=$(wc -c Packages)
+  - PKGS_GZ=$(wc -c Packages.gz)
+  - |
+    cat > Release << EOF
+    Architectures: all
+    Date: $(date -R)
+    MD5Sum:
+     $(md5sum Packages | cut -d" " -f1) $PKGS
+     $(md5sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    SHA1:
+     $(sha1sum Packages | cut -d" " -f1) $PKGS
+     $(sha1sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    SHA256:
+     $(sha256sum Packages | cut -d" " -f1) $PKGS
+     $(sha256sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    EOF
+  - mkdir public
+  - mv packages Packages Packages.gz Release public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
