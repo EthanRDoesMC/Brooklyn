@@ -24,7 +24,7 @@ build:
     paths:
     - packages/com.beeper.brooklyn_*.deb
 
-repo:
+pages:
   stage: deploy
   image: debian
   before_script:
