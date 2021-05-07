@@ -27,16 +27,20 @@ build:
 pages:
   stage: deploy
   image: debian
+  variables:
+    GIT_STRATEGY: none
   before_script:
   - apt update && apt install dpkg-dev -y
   script:
-  - dpkg-scanpackages packages/ > Packages
+  - dpkg-scanpackages ./packages/ > Packages
   - cat Packages | gzip -9c > Packages.gz
   - PKGS=$(wc -c Packages)
   - PKGS_GZ=$(wc -c Packages.gz)
   - |
     cat > Release << EOF
-    Architectures: all
+    Origin: Beeper
+    Label: Beeper
+    Architectures: iphoneos-arm
     Date: $(date -R)
     MD5Sum:
      $(md5sum Packages | cut -d" " -f1) $PKGS
