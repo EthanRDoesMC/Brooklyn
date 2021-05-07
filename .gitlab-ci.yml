@@ -1,0 +1,62 @@
+stages:
+- build
+- deploy
+
+build:
+  tags:
+  - mac
+  stage: build
+  before_script:
+  - export PACKAGE_VERSION=$(cat control | grep Version | awk '{ print $2 }')-$CI_PIPELINE_IID+$CI_COMMIT_REF_NAME
+  - export PATH=/opt/homebrew/bin:$PATH
+  - export LIBRARY_PATH=/opt/homebrew/lib
+  - export CPATH=/opt/homebrew/include
+  - |
+    for d in $(brew --prefix)/opt/*/libexec/gnubin; do
+      export PATH=$d:$PATH
+    done
+  script:
+  - make package
+  cache:
+    paths:
+    - .theos
+  artifacts:
+    paths:
+    - packages/com.beeper.brooklyn_*.deb
+
+pages:
+  stage: deploy
+  image: debian
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+  - apt update && apt install dpkg-dev -y
+  script:
+  - dpkg-scanpackages ./packages/ > Packages
+  - cat Packages | gzip -9c > Packages.gz
+  - PKGS=$(wc -c Packages)
+  - PKGS_GZ=$(wc -c Packages.gz)
+  - |
+    cat > Release << EOF
+    Origin: Beeper
+    Label: Beeper
+    Architectures: iphoneos-arm
+    Date: $(date -R)
+    MD5Sum:
+     $(md5sum Packages | cut -d" " -f1) $PKGS
+     $(md5sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    SHA1:
+     $(sha1sum Packages | cut -d" " -f1) $PKGS
+     $(sha1sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    SHA256:
+     $(sha256sum Packages | cut -d" " -f1) $PKGS
+     $(sha256sum Packages.gz | cut -d" " -f1) $PKGS_GZ
+    EOF
+  - mkdir -p public/packages/
+  - mv -f packages/* public/packages/
+  - mv -f Packages Packages.gz Release public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - main
