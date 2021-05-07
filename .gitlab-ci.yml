@@ -49,4 +49,4 @@ repo:
     paths:
     - public
   only:
-  - master
+  - main
