@@ -52,8 +52,9 @@ pages:
      $(sha256sum Packages | cut -d" " -f1) $PKGS
      $(sha256sum Packages.gz | cut -d" " -f1) $PKGS_GZ
     EOF
-  - mkdir public
-  - mv packages Packages Packages.gz Release public/
+  - mkdir -p public/packages/
+  - mv -f packages/* public/packages/
+  - mv -f Packages Packages.gz Release public/
   artifacts:
     paths:
     - public
