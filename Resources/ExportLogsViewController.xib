@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,14 +31,27 @@
                         <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="jBE-zr-eGK"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pd7-Wq-mSc">
+                    <rect key="frame" x="0.0" y="386" width="320" height="30"/>
+                    <state key="normal" title="Clear">
+                        <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clearLogs:" destination="-1" eventType="touchUpInside" id="751-2a-0DE"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Pd7-Wq-mSc" secondAttribute="trailing" id="6I4-db-faz"/>
                 <constraint firstAttribute="trailing" secondItem="C8E-gk-iBB" secondAttribute="trailing" constant="8" id="98V-aw-28W"/>
+                <constraint firstAttribute="bottom" secondItem="Pd7-Wq-mSc" secondAttribute="bottom" constant="64" id="GfV-Kc-rKd"/>
                 <constraint firstItem="4GH-Vq-5w8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="L9h-2I-mgt"/>
                 <constraint firstItem="4GH-Vq-5w8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="124" id="MEN-H2-TdB"/>
                 <constraint firstItem="C8E-gk-iBB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Tl5-bZ-kwq"/>
+                <constraint firstItem="Pd7-Wq-mSc" firstAttribute="top" secondItem="C8E-gk-iBB" secondAttribute="bottom" constant="8" symbolic="YES" id="a7e-32-U0o"/>
                 <constraint firstItem="C8E-gk-iBB" firstAttribute="top" secondItem="4GH-Vq-5w8" secondAttribute="bottom" constant="8" symbolic="YES" id="tCD-9b-PFq"/>
+                <constraint firstItem="Pd7-Wq-mSc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wMD-oz-v1p"/>
             </constraints>
             <point key="canvasLocation" x="826.875" y="95"/>
         </view>

@@ -56,6 +56,8 @@
 	<string>public.app-category.social-networking</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Scan your QR code to download your config file.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Brooklyn uses contacts directly from the Messages app to show their details in Beeper.</string>
 	<key>UIBackgroundModes</key>

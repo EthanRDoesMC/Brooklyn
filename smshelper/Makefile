@@ -8,7 +8,6 @@ TWEAK_NAME = smshelper
 
 smshelper_FILES = Tweak.xm
 smshelper_FRAMEWORKS = Foundation
-smshelper_LIBRARIES = rocketbootstrap
 smshelper_PRIVATE_FRAMEWORKS = IMCore AppSupport ChatKit
 smshelper_CFLAGS = -fobjc-arc
 

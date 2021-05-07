@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BLOnboardingViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tapGestureRecognizer id="DMF-XH-bgp">
+            <connections>
+                <action selector="logItems:" destination="-1" id="vzT-uK-PDV"/>
+            </connections>
+        </tapGestureRecognizer>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIY-Ra-ZWC">
+                    <rect key="frame" x="16" y="213" width="288" height="42"/>
+                    <color key="backgroundColor" systemColor="linkColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="Kvp-1T-Ihl"/>
+                    </constraints>
+                    <state key="normal" title="Scan QR Code">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="buttonPushed:" destination="-1" eventType="touchUpInside" id="xND-Hc-pwd"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brooklyn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6fc-Kt-unM">
+                    <rect key="frame" x="16" y="149" width="288" height="44"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="37"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="QIY-Ra-ZWC" secondAttribute="trailing" constant="16" id="2Wh-GZ-oKD"/>
+                <constraint firstItem="QIY-Ra-ZWC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="77N-1O-IFy"/>
+                <constraint firstAttribute="trailing" secondItem="6fc-Kt-unM" secondAttribute="trailing" constant="16" id="9dF-Y8-1pG"/>
+                <constraint firstItem="QIY-Ra-ZWC" firstAttribute="top" secondItem="6fc-Kt-unM" secondAttribute="bottom" constant="20" id="aiL-G4-h8f"/>
+                <constraint firstItem="6fc-Kt-unM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="149" id="m0g-1c-4Bi"/>
+                <constraint firstItem="6fc-Kt-unM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="tfm-b4-AdQ"/>
+                <constraint firstItem="QIY-Ra-ZWC" firstAttribute="top" secondItem="6fc-Kt-unM" secondAttribute="bottom" constant="20" id="zwF-ZA-VeS"/>
+            </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="DMF-XH-bgp" appends="YES" id="c8X-De-pVZ"/>
+            </connections>
+            <point key="canvasLocation" x="157.5" y="125"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

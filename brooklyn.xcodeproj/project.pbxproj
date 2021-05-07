@@ -47,6 +47,10 @@
 		4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D49362604612E00A2BE48 /* LogViewController.h */; };
 		4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D49372604612E00A2BE48 /* LogViewController.m */; };
 		4F9D49452604727F00A2BE48 /* NSTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D493D2604682500A2BE48 /* NSTask.h */; };
+		4FA8AE582630E0AB00F6425E /* BLOnboardingViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA8AE552630E0AB00F6425E /* BLOnboardingViewController.h */; };
+		4FA8AE592630E0AB00F6425E /* BLOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8AE562630E0AB00F6425E /* BLOnboardingViewController.m */; };
+		4FAEE27C2634A52500C6FA57 /* UIView+IB.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAEE27A2634A52500C6FA57 /* UIView+IB.h */; };
+		4FAEE27D2634A52500C6FA57 /* UIView+IB.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAEE27B2634A52500C6FA57 /* UIView+IB.m */; };
 		4FB437C82617EA91000974C3 /* ExportLogsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FB437C52617EA91000974C3 /* ExportLogsViewController.h */; };
 		4FB437C92617EA91000974C3 /* ExportLogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB437C62617EA91000974C3 /* ExportLogsViewController.m */; };
 		4FFD1ED42606EF8200D535B0 /* BLMautrixTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FFD1ED22606EF8200D535B0 /* BLMautrixTask.h */; };
@@ -120,6 +124,10 @@
 		4F9D49362604612E00A2BE48 /* LogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
 		4F9D49372604612E00A2BE48 /* LogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		4F9D493D2604682500A2BE48 /* NSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTask.h; sourceTree = "<group>"; };
+		4FA8AE552630E0AB00F6425E /* BLOnboardingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLOnboardingViewController.h; sourceTree = "<group>"; };
+		4FA8AE562630E0AB00F6425E /* BLOnboardingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLOnboardingViewController.m; sourceTree = "<group>"; };
+		4FAEE27A2634A52500C6FA57 /* UIView+IB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+IB.h"; sourceTree = "<group>"; };
+		4FAEE27B2634A52500C6FA57 /* UIView+IB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+IB.m"; sourceTree = "<group>"; };
 		4FB2B7FE2611032700E524B3 /* layout */ = {isa = PBXFileReference; lastKnownFileType = folder; path = layout; sourceTree = "<group>"; };
 		4FB437C52617EA91000974C3 /* ExportLogsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExportLogsViewController.h; sourceTree = "<group>"; };
 		4FB437C62617EA91000974C3 /* ExportLogsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExportLogsViewController.m; sourceTree = "<group>"; };
@@ -217,9 +225,20 @@
 			path = xchighlight;
 			sourceTree = "<group>";
 		};
+		4FA8AE5C2630E0BC00F6425E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4FA8AE552630E0AB00F6425E /* BLOnboardingViewController.h */,
+				4FA8AE562630E0AB00F6425E /* BLOnboardingViewController.m */,
+				4FAEE27B2634A52500C6FA57 /* UIView+IB.m */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		4FAB0AB125D64192007448DA /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				4FA8AE5C2630E0BC00F6425E /* Onboarding */,
 				4FAB0AB525D6422C007448DA /* Message Inspector */,
 				4FAB0AB725D6428E007448DA /* Chat List */,
 				4FAB0AB825D642AC007448DA /* Message Sender */,
@@ -305,6 +324,7 @@
 				4F6DB950262A9A27001A3EE4 /* rocketbootstrap.h */,
 				4F6DB953262A9A3D001A3EE4 /* bootstrap.h */,
 				4F9D493D2604682500A2BE48 /* NSTask.h */,
+				4FAEE27A2634A52500C6FA57 /* UIView+IB.h */,
 				4F70019A2599A13E00698E5C /* ChatKit.h */,
 				4F360C2A26167E9100DCB726 /* Categories */,
 			);
@@ -356,9 +376,11 @@
 				4F8D117625A5314600040303 /* SendMessageController.h in Headers */,
 				4F9D49392604612E00A2BE48 /* LogViewController.h in Headers */,
 				4F48376A25F20FE0001B9415 /* MessageBuilder.h in Headers */,
+				4FAEE27C2634A52500C6FA57 /* UIView+IB.h in Headers */,
 				4FB437C82617EA91000974C3 /* ExportLogsViewController.h in Headers */,
 				4F8210D025A03843005B9453 /* BrooklynBridge.m in Headers */,
 				4F8210AC25A035F8005B9453 /* IMCore.h in Headers */,
+				4FA8AE582630E0AB00F6425E /* BLOnboardingViewController.h in Headers */,
 				4F8210AD25A035F8005B9453 /* ChatKit.h in Headers */,
 				4F8210AE25A035F8005B9453 /* BLAppDelegate.h in Headers */,
 				4F8210AF25A035F8005B9453 /* BLNewChatViewController.h in Headers */,
@@ -465,6 +487,7 @@
 			files = (
 				4F8D117D25A56DEE00040303 /* SendMessageController.m in Sources */,
 				4FB437C92617EA91000974C3 /* ExportLogsViewController.m in Sources */,
+				4FA8AE592630E0AB00F6425E /* BLOnboardingViewController.m in Sources */,
 				4F82109B25A034CF005B9453 /* BrooklynBridge.m in Sources */,
 				4F8D118225A572C100040303 /* ChatViewController.m in Sources */,
 				4F82109525A034CF005B9453 /* BLAppDelegate.m in Sources */,
@@ -473,6 +496,7 @@
 				4F48376B25F20FE0001B9415 /* MessageBuilder.m in Sources */,
 				4F82109A25A034CF005B9453 /* BLRootViewController.m in Sources */,
 				4F360C2726167D5F00DCB726 /* UIImage+Base64.m in Sources */,
+				4FAEE27D2634A52500C6FA57 /* UIView+IB.m in Sources */,
 				4F9D493A2604612E00A2BE48 /* LogViewController.m in Sources */,
 				4FFD1ED52606EF8200D535B0 /* BLMautrixTask.m in Sources */,
 			);

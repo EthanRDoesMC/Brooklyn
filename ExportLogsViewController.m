@@ -6,6 +6,7 @@
 //
 
 #import "ExportLogsViewController.h"
+#import "BLMautrixTask.h"
 
 @interface ExportLogsViewController<UIPickerViewDataSource, UIPickerViewController> () {
     NSString * logDirectory;
@@ -56,6 +57,10 @@
     [self presentViewController:activityViewController animated:TRUE completion:nil];
 }
 
+- (IBAction)clearLogs:(id)sender {
+    [BLMautrixTask.sharedTask clearLogs];
+    [self viewDidLoad];
+}
 
 /*
 #pragma mark - Navigation

@@ -26,15 +26,21 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)sendDictionary:(NSDictionary *)dictionary withID:(NSNumber *)msgID;
 -(void)handleExternal:(NSNotification *)notification;
 -(void)handleCommand:(NSDictionary *)command;
+-(void)sendErrorCode:(NSString *)code withDescription:(NSString *)description forCommand:(NSDictionary *)command;
 -(void)respondWithChatInfoForCommand:(NSDictionary *)command;
 -(void)getContactInfoForCommand:(NSDictionary *)command;
 -(void)getChatListWithCommand:(NSDictionary *)command;
 -(void)sendMessageCommand:(NSDictionary *)command;
 -(void)sendAttachmentCommand:(NSDictionary *)command;
 -(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat;
+-(void)forwardTypingIndicator:(IMMessage *)typingIndicator fromChat:(IMChat *)chat;
+-(void)forwardReadReceipt:(IMMessage *)readReceipt fromChat:(IMChat *)chat;
 -(void)getMessagesForCommand:(NSDictionary *)command;
 -(void)sendReadReceiptWithCommand:(NSDictionary *)command;
 -(BOOL)checkIfRunning:(NSString *)bundle_id;
+-(void)clearLogs;
+-(void)handleTaskQuit:(NSNotification *)notification;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -97,6 +97,7 @@
 -(BOOL)isTypingMessage;
 -(BOOL)isDelivered;
 -(BOOL)isSent;
+-(BOOL)isRead;
 -(BOOL)isLocatingMessage;
 //-(IMMessageItem *)_imMessageItem;
 -(NSAttributedString *)messageSubject;

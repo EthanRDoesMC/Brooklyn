@@ -2,6 +2,7 @@
 #import "ChatViewController.h"
 #import "LogViewController.h"
 #import "ExportLogsViewController.h"
+#import "BLOnboardingViewController.h"
 @interface BLRootViewController ()
 @property (nonatomic, strong) NSMutableArray * chats;
 @property (nonatomic, strong) UITabBarController * tbc;
@@ -47,7 +48,10 @@
     //    [self.tableView setBackgroundColor:[UIColor clearColor]];
     //    []
     //    [self.tableView setSeparatorEffect:<#(API_AVAILABLE(ios(8.0)) UIVisualEffect *)#>]
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addButtonTapped:) name:@"BLLaunchOnboarding" object:nil];
 }
+
+
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self reloadChats];
@@ -75,8 +79,8 @@
 }
 
 - (void)addButtonTapped:(id)sender {
-    BLNewChatViewController * newc = [[BLNewChatViewController alloc] initWithNibName: @"BLNewChatViewController" bundle:nil];
-    [self.navigationController pushViewController:newc animated:YES];
+    BLOnboardingViewController * newc = [[BLOnboardingViewController alloc] initWithNibName: @"BLOnboardingViewController" bundle:nil];
+    [self presentViewController:newc animated:YES completion:nil];
 }
 
 -(void)viewLog:(id)sender {

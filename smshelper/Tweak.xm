@@ -27,7 +27,7 @@
 -(id)init {
     NSLog(@"init blsmshelper");
     self.messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
-    rocketbootstrap_distributedmessagingcenter_apply(self.messagingCenter);
+    //rocketbootstrap_distributedmessagingcenter_apply(self.messagingCenter);
     [self.messagingCenter runServerOnCurrentThread];
     [self.messagingCenter registerForMessageName:@"sendAttachment" target:self selector:@selector(handleCommand:withDictionary:)];
     [self.messagingCenter registerForMessageName:@"ping" target:self selector:@selector(ping)];

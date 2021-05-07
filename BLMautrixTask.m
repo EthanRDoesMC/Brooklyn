@@ -12,11 +12,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import "CPDistributedMessagingCenter.h"
-#import "rocketbootstrap.h"
 
-#ifndef DEBUG
-#define NSLog(...);
-#endif
+
 
 @interface UIApplication (BLSMSHelper)
 -(BOOL)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
@@ -51,7 +48,10 @@ NSString *HBOutputForShellCommand(NSString *command) {
     return returnCode == 0 ? output : nil;
 }
 
+
+
 @implementation BLMautrixTask
+
 NSInteger requestID = 0;
 
 + (instancetype)sharedTask {
@@ -64,18 +64,24 @@ NSInteger requestID = 0;
     return _sharedTask;
 }
 -(id)initAndLaunch {
+    if (self.task) {
+        [self.task suspend];
+        [self.task interrupt];
+    }
     // Register notification observers
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageReceivedNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(analyzeNotification:) name:@"__kIMChatItemsInserted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleExternal:) name:@"__kIMChatMessageDidChangeNotification" object:nil];
     self.sessionSentGUIDs = [NSMutableArray new];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTaskQuit:) name:@"NSTaskDidTerminateNotification" object:nil];
+    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingMessage:) name:@"__kIMChatMessageDidChangeNotification" object:nil];
     //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     //    NSString *documentsDirectory = [paths objectAtIndex:0];
     //    NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Beeper/%@.txt", [NSDate date]]];
     //self.messageCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
     //[[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES];
-#ifdef SAVELOGS
+    
     NSString * fhp = [NSString stringWithFormat:@"/var/mobile/Documents/Beeper/%@.txt", [NSDate date]];
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:fhp];
     if ( !fh ) {
@@ -84,70 +90,109 @@ NSInteger requestID = 0;
     }
     
     freopen([fhp cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-#endif
     NSLog(@"Brooklyn %@", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn"));
     NSLog(@"Brooklyn launching task");
     self = [super init];
     self.task = [NSTask new];
     NSMutableArray *arguments = [[NSMutableArray alloc] init];
     self.task.launchPath = @"/var/mobile/Documents/mautrix-imessage-armv7/mautrix-imessage";
-    self.task.arguments  = arguments;
-    self.task.currentDirectoryPath = @"/var/mobile/Documents/mautrix-imessage-armv7/"; //temporary location
-    NSMutableDictionary *defaultEnv = [[NSMutableDictionary alloc] initWithDictionary:[[NSProcessInfo processInfo] environment]];
-    [defaultEnv setObject:@"YES" forKey:@"NSUnbufferedIO"];
-    
-    self.task.environment = defaultEnv;
-    
-    //NSPipe *writePipe = [NSPipe pipe];
-    //NSFileHandle *writeHandle = [writePipe fileHandleForWriting];
-    self.writePipe = [NSPipe pipe];
-    [self.task setStandardInput: self.writePipe];
-    
-    self.task.standardOutput = [NSPipe pipe];
-    [[self.task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
-        NSData *data = [file availableData];
-        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"mautrix-imessage sent output:%@", string); //writes to log file as well. neat!
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!self->_outputString) {
-                self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")]; //otherwise we're appending to nil
-            }
-            self.outputString = [[self outputString] stringByAppendingString:string];
-            // i'd like to replace this way of outputting the log by reading directly from the file, but i only just learned about file handles, so let's be real here: if I did it now (4/16) it would only make things slower
-            [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
-            NSArray * commands = [string componentsSeparatedByString:@"\n"];
-            for (NSString * command in commands) {
-                [self handleCommand:[NSJSONSerialization JSONObjectWithData:[command dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]];
-            }
-            
-        });
-    }];
-    self.task.standardError = [NSPipe pipe];
-    [[self.task.standardError fileHandleForReading] setReadabilityHandler:^(NSFileHandle *errfile) {
-        NSData *errdata = [errfile availableData];
-        NSString *errstring = [[NSString alloc] initWithData:errdata encoding:NSUTF8StringEncoding];
-        NSLog(@"mautrix-imessage sent error:%@", errstring);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!self->_outputString) {
-                self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")];
-            }
-            //            [fh seekToEndOfFile];
-            //            [fh writeData:errdata];
-            self.outputString = [[self outputString] stringByAppendingString:errstring];
-            [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
-        });
-    }];
-    
+    if ([NSUserDefaults.standardUserDefaults stringForKey:@"configurl"]) {
+        [arguments addObject:[NSString stringWithFormat:@"-u%@",[NSUserDefaults.standardUserDefaults stringForKey:@"configurl"]]];
+        [arguments addObject:@"--output-redirect"];
+        NSLog(@"%@",arguments);
+    }
+        self.task.arguments  = arguments;
+        self.task.currentDirectoryPath = @"/var/mobile/Documents/mautrix-imessage-armv7/"; //temporary location
+        NSMutableDictionary *defaultEnv = [[NSMutableDictionary alloc] initWithDictionary:[[NSProcessInfo processInfo] environment]];
+        [defaultEnv setObject:@"YES" forKey:@"NSUnbufferedIO"];
+        
+        self.task.environment = defaultEnv;
+        
+        //NSPipe *writePipe = [NSPipe pipe];
+        //NSFileHandle *writeHandle = [writePipe fileHandleForWriting];
+        self.writePipe = [NSPipe pipe];
+        [self.task setStandardInput: self.writePipe];
+        
+        self.task.standardOutput = [NSPipe pipe];
+        [[self.task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
+            NSData *data = [file availableData];
+            NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"mautrix-imessage sent output:%@", string); //writes to log file as well. neat!
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!self->_outputString) {
+                    self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")]; //otherwise we're appending to nil
+                }
+                self.outputString = [[self outputString] stringByAppendingString:string];
+                // i'd like to replace this way of outputting the log by reading directly from the file, but i only just learned about file handles, so let's be real here: if I did it now (4/16) it would only make things slower
+                [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
+                if (string) {
+                    NSArray * commands = [string componentsSeparatedByString:@"\n"];
+                    for (NSString * command in commands) {
+                        if (![command isEqualToString:@""]) {
+                            [self handleCommand:[NSJSONSerialization JSONObjectWithData:[command dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]];
+                        }
+                    }
+                }
+                else {
+                    [self handleCommand:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+                }
+                
+            });
+        }];
+        self.task.standardError = [NSPipe pipe];
+        [[self.task.standardError fileHandleForReading] setReadabilityHandler:^(NSFileHandle *errfile) {
+            NSData *errdata = [errfile availableData];
+            NSString *errstring = [[NSString alloc] initWithData:errdata encoding:NSUTF8StringEncoding];
+            NSLog(@"mautrix-imessage sent error:%@", errstring);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!self->_outputString) {
+                    self->_outputString = [NSString stringWithFormat:@"%@ \n", HBOutputForShellCommand(@"dpkg-query --showformat='${Version}\n' --show com.beeper.brooklyn")];
+                }
+                //            [fh seekToEndOfFile];
+                //            [fh writeData:errdata];
+                self.outputString = [[self outputString] stringByAppendingString:errstring];
+                [[NSNotificationCenter defaultCenter]  postNotificationName:@"BLMautrixLogUpdated" object:nil];
+            });
+        }];
+        
+        
     [self.task launch];
     return self;
 }
-//-(NSString *)outputString {
-//    if (!self.outputString) {
-//        _outputString = [NSString string];
-//    }
-//    return self.outputString;
-//}
 
+-(void)handleTaskQuit:(NSNotification *)notification {
+    [NSNotificationCenter.defaultCenter postNotificationName:@"BLLaunchOnboarding" object:nil];
+    //    [self.task.standardOutput fileHandleForReading].readabilityHandler = nil;
+    //    [self.task.standardError fileHandleForReading].readabilityHandler = nil;
+}
+
+#pragma mark - Command Switch
+-(void)handleCommand:(NSDictionary *)command {
+    NSLog(@"Got command %@", command[@"command"]);
+    if ([command[@"command"] isEqual:@"get_chat"]) {
+        [self respondWithChatInfoForCommand:command];
+    } else if ([command[@"command"] isEqual:@"get_contact"]) {
+        [self getContactInfoForCommand:command];
+    } else if ([command[@"command"] isEqual:@"send_message"]) {
+        [self sendMessageCommand:command];
+    } else if ([command[@"command"] isEqual:@"send_media"]) {
+        [self sendAttachmentCommand:command];
+    } else if ([command[@"command"] isEqual:@"get_chats"]) {
+        [self getChatListWithCommand:command];
+    } else if ([command[@"command"] isEqual:@"get_recent_messages"]) {
+        [self getMessagesForCommand:command];
+    } else if ([command[@"command"] isEqual:@"send_read_receipt"]) {
+        [self sendReadReceiptWithCommand:command];
+    } else if ([command[@"command"] isEqual:@"config_url"]) {
+        [self sendReadReceiptWithCommand:command];
+    } else if ([command[@"command"] isEqual:@"log"]) {
+        NSLog(@"Log acknowledged");
+    } else if (command[@"command"]) {
+        [self sendErrorCode:@"unknown_command" withDescription:[NSString stringWithFormat:@"Unknown command %@", command[@"command"]] forCommand:command];
+    }
+}
+
+#pragma mark - Notification Handlers
 -(void)incomingMessage:(NSNotification *)notification {
     [self forwardMessage:notification.userInfo[@"__kIMChatValueKey"] fromChat:notification.object];
     NSLog(@"Forwarding incoming message to bridge");
@@ -181,6 +226,12 @@ NSInteger requestID = 0;
         isDupe = true;
         NSLog(@"typing message: %hhd", thisMessage.isTypingMessage);
         NSLog(@"retract typing indc: %hhd", thisMessage.isFinished);
+        if (thisMessage.isTypingMessage) {
+            [self forwardTypingIndicator:thisMessage fromChat:notification.object];
+        }
+    }
+    if (thisMessage.isRead) {
+        [self forwardReadReceipt:thisMessage fromChat:notification.object];
     }
     NSLog(@"%hhd", isDupe);
     if (isDupe == false) {
@@ -188,14 +239,13 @@ NSInteger requestID = 0;
     }
 }
 
+#pragma mark - Dictionary Handlers
 -(void)sendDictionary:(NSDictionary *)dictionary {
     requestID += 1;
     [self sendDictionary:dictionary withID:[NSNumber numberWithInteger:requestID]];
 }
 -(void)sendDictionary:(NSDictionary *)dictionary withID:(NSNumber *)msgID {
-    NSLog(@"Got data:%@ and ID:%@", dictionary, msgID);
     [dictionary setValue:msgID forKey: @"id"];
-    NSLog(@"made it past setValue");
     //    if (msgID > [NSNumber numberWithInteger:requestID]) {
     //        requestID = (NSInteger)msgID;
     //    }
@@ -203,11 +253,23 @@ NSInteger requestID = 0;
     //NSString *jsonString = [[NSString alloc] initWithData:dataForSending encoding:NSUTF8StringEncoding];
     //NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:dataForSending options:0 error:nil]);
     //NSLog(@"%@", jsonString);
-    NSLog(@"Writing data:%@", dictionary);
+    NSLog(@"Sending command (id: %@, contents: %@)", msgID, dictionary);
     [[self.task.standardInput fileHandleForWriting] writeData:dataForSending];
 }
 
+#pragma mark - Error Handler
+-(void)sendErrorCode:(NSString *)code withDescription:(NSString *)description forCommand:(NSDictionary *)command {
+    NSLog(@"Error: %@ (%@)",code,description);
+    NSMutableDictionary * request = [NSMutableDictionary new];
+    [request setValue:@"error" forKey:@"command"];
+    NSMutableDictionary * data = [NSMutableDictionary new];
+    [data setValue:code forKey:@"code"];
+    [data setValue:description forKey:@"message"];
+    [request setValue:[NSDictionary dictionaryWithDictionary:data] forKey:@"data"];
+    [self sendDictionary:request withID:command[@"id"]];
+}
 
+#pragma mark - Ping
 -(void)sendPing {
     NSMutableDictionary *pingDictionary = [NSMutableDictionary new];
     [pingDictionary setValue:@"ping" forKey:@"command"];
@@ -215,6 +277,7 @@ NSInteger requestID = 0;
     [self sendDictionary:pingDictionary];
 }
 
+#pragma mark - Message Forward
 -(void)forwardMessage:(IMMessage *)message fromChat:(IMChat *)chat {
     NSMutableDictionary * datadict = [NSMutableDictionary new];
     
@@ -240,25 +303,33 @@ NSInteger requestID = 0;
     [self sendDictionary:request];
 }
 
--(void)handleCommand:(NSDictionary *)command {
-    NSLog(@"Got command %@", command[@"command"]);
-    if ([command[@"command"] isEqual:@"get_chat"]) {
-        [self respondWithChatInfoForCommand:command];
-    } else if ([command[@"command"] isEqual:@"get_contact"]) {
-        [self getContactInfoForCommand:command];
-    } else if ([command[@"command"] isEqual:@"send_message"]) {
-        [self sendMessageCommand:command];
-    } else if ([command[@"command"] isEqual:@"send_media"]) {
-        [self sendAttachmentCommand:command];
-    } else if ([command[@"command"] isEqual:@"get_chats"]) {
-        [self getChatListWithCommand:command];
-    } else if ([command[@"command"] isEqual:@"get_recent_messages"]) {
-        [self getMessagesForCommand:command];
-    } else if ([command[@"command"] isEqual:@"send_read_receipt"]) {
-        [self sendReadReceiptWithCommand:command];
-    }
+-(void)forwardTypingIndicator:(IMMessage *)typingIndicator fromChat:(IMChat *)chat {
+    NSMutableDictionary * dataDictionary = [NSMutableDictionary new];
+    [dataDictionary setValue:chat.guid forKey:@"chat_guid"];
+    [dataDictionary setValue:[NSNumber numberWithBool:!(BOOL)typingIndicator.isFinished] forKey:@"typing"];
+    NSMutableDictionary * request = [NSMutableDictionary new];
+    [request setValue:@"typing" forKey:@"command"];
+    [request setObject:[NSDictionary dictionaryWithDictionary:dataDictionary] forKey:@"data"];
+    NSLog(@"Forwarding typing indicator:%@ from chat:%@", typingIndicator, chat);
+    [self sendDictionary:request];
 }
 
+-(void)forwardReadReceipt:(IMMessage *)readReceipt fromChat:(IMChat *)chat {
+    NSMutableDictionary * dataDictionary = [NSMutableDictionary new];
+    [dataDictionary setValue:chat.guid forKey:@"chat_guid"];
+    [dataDictionary setValue:chat.guid forKey:@"sender_guid"];
+    // read receipts are "applied" to messages. i think.
+    [dataDictionary setValue:[NSNumber numberWithBool:!(BOOL)readReceipt.isFromMe] forKey:@"is_from_me"];
+    //[dataDictionary setValue:[NSString stringWithFormat:@"%@;-;%@", [[readReceipt sender] accountTypeName], [[readReceipt sender] ID]] forKey:@"sender_guid"];
+    [dataDictionary setValue:readReceipt.guid forKey:@"read_up_to"];
+    NSMutableDictionary * request = [NSMutableDictionary new];
+    [request setValue:@"read_receipt" forKey:@"command"];
+    [request setObject:[NSDictionary dictionaryWithDictionary:dataDictionary] forKey:@"data"];
+    NSLog(@"Forwarding read receipt:%@ from chat:%@", readReceipt, chat);
+    [self sendDictionary:request];
+}
+
+#pragma mark - Get Message GUIDs
 -(void)getMessagesForCommand:(NSDictionary *)command {
     IMChat * chat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
     [chat loadMessagesBeforeDate:[NSDate date] limit:100 loadImmediately:YES];
@@ -297,6 +368,7 @@ NSInteger requestID = 0;
     [self sendDictionary:request withID:command[@"id"]];
 }
 
+#pragma mark - Send Message
 -(void)sendMessageCommand:(NSDictionary *)command {
     NSMutableDictionary * datadict = [NSMutableDictionary new];
     IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
@@ -329,7 +401,7 @@ NSInteger requestID = 0;
 -(void)sendAttachmentCommand:(NSDictionary *)command {
     if ([[UIApplication sharedApplication] launchApplicationWithIdentifier:@"com.apple.MobileSMS" suspended:YES]) {
         NSLog(@"Launched successfully");
-        NSDictionary * message = @{ @"path_on_disk" : command[@"data"][@"path_on_disk"], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
+        NSDictionary * message = @{ @"path_on_disk" : [command[@"data"][@"path_on_disk"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]], @"file_name" : command[@"data"][@"file_name"], @"chat_guid" : command[@"data"][@"chat_guid"] };
         NSLog(@"Outgoing user info: %@", message);
         NSDictionary *reply;
         while (![self checkIfRunning:@"MobileSMS"]) {
@@ -338,24 +410,24 @@ NSInteger requestID = 0;
         }
         NSLog(@"sms is running!");
         
-            CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
+        CPDistributedMessagingCenter * messagingCenter = [CPDistributedMessagingCenter centerNamed:@"com.beeper.brooklyn"];
         NSLog(@"Ping!");
-            //[messagingCenter sendMessageName:@"sendAttachment" userInfo:nil];
+        //[messagingCenter sendMessageName:@"sendAttachment" userInfo:nil];
         while (![messagingCenter sendMessageAndReceiveReplyName:@"ping" userInfo:nil]) {
             NSLog(@"Pain");
             [messagingCenter sendMessageAndReceiveReplyName:@"ping" userInfo:nil];
             NSLog(@"Ping!");
         }
         NSLog(@"POG");
-            rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
-            //[messagingCenter sendMessageName:@"sendAttachment" userInfo:[NSDictionary dictionaryWithDictionary:message]];
-            if ((reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message])) {
-                NSLog(@"Reply: %@", reply);
-                [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
-                NSLog(@"Sent message; telling bridge...");
-                NSLog(@"Reply: %@", reply);
-                NSLog(@"Command's ID: %@", command[@"id"]);
-                [self sendDictionary:[NSMutableDictionary dictionaryWithDictionary:@{ @"command": @"response", @"data": @{ @"guid": reply[@"sentGUID"], @"timestamp": reply[@"request"][@"data"][@"timestamp"] } }] withID:command[@"id"]];
+        //rocketbootstrap_distributedmessagingcenter_apply(messagingCenter);
+        //[messagingCenter sendMessageName:@"sendAttachment" userInfo:[NSDictionary dictionaryWithDictionary:message]];
+        if ((reply = [messagingCenter sendMessageAndReceiveReplyName:@"sendAttachment" userInfo:message])) {
+            NSLog(@"Reply: %@", reply);
+            [self.sessionSentGUIDs addObject:reply[@"sentGUID"]];
+            NSLog(@"Sent message; telling bridge...");
+            NSLog(@"Reply: %@", reply);
+            NSLog(@"Command's ID: %@", command[@"id"]);
+            [self sendDictionary:[NSMutableDictionary dictionaryWithDictionary:@{ @"command": @"response", @"data": @{ @"guid": reply[@"sentGUID"], @"timestamp": reply[@"request"][@"data"][@"timestamp"] } }] withID:command[@"id"]];
             
         }
     }
@@ -449,5 +521,10 @@ NSInteger requestID = 0;
     NSLog(@"Got chats list:%@, returning...", chatArray);
     [self sendDictionary:request withID:command[@"id"]];
 }
+
+-(void)clearLogs {
+    HBOutputForShellCommand(@"rm /var/mobile/Documents/Beeper/*");
+}
+
 @end
 
