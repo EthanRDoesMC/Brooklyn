@@ -17,6 +17,9 @@ build:
     done
   script:
   - make package
+  cache:
+    paths:
+    - .theos
   artifacts:
     paths:
     - packages/com.beeper.brooklyn_*.deb
@@ -24,6 +27,8 @@ build:
 repo:
   stage: deploy
   image: debian
+  before_script:
+  - apt update && apt install dpkg-dev -y
   script:
   - dpkg-scanpackages packages/ > Packages
   - cat Packages | gzip -9c > Packages.gz
