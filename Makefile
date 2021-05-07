@@ -16,6 +16,7 @@ Brooklyn_CODESIGN_FLAGS = -Sent.plist
 include $(THEOS_MAKE_PATH)/application.mk
 
 before-all::
+	sh layout/var/mobile/Documents/mautrix-imessage-armv7/fetch.sh
 	sh nibbuild.sh
 SUBPROJECTS += rubicon
 SUBPROJECTS += brooklynsettings
