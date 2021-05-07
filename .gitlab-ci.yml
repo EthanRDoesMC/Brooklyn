@@ -6,8 +6,16 @@ build:
   tags:
   - mac
   stage: build
-  script:
+  before_script:
   - export PACKAGE_VERSION=$CI_PIPELINE_IID+$CI_COMMIT_REF_NAME
+  - export PATH=/opt/homebrew/bin:$PATH
+  - export LIBRARY_PATH=/opt/homebrew/lib
+  - export CPATH=/opt/homebrew/include
+  - |
+    for d in $(brew --prefix)/opt/*/libexec/gnubin; do
+      export PATH=$d:$PATH
+    done
+  script:
   - make package
   - mv packages/com.beeper.brooklyn_${PACKAGE_VERSION}_iphoneos-arm.deb .
   artifacts:
