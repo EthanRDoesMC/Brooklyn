@@ -1,5 +1,5 @@
 export THEOS = $(HOME)/theos
-export SYSROOT = $(THEOS)/sdks/iPhoneOS8.4.1.sdk
+export SYSROOT = $(THEOS)/sdks/iPhoneOS14.4.sdk
 TARGET := iphone:clang:latest:8.0
 include $(THEOS)/makefiles/common.mk
 ARCHS = armv7 arm64
