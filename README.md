@@ -1,6 +1,9 @@
-#  imessage-api-ios a.k.a. Brooklyn
-iMessage API and runtime inspection tool for iOS
-(this readme is very out of date. i'll update it asap. -ethan)
+#  Brooklyn
+
+## This readme is out-of-date.
+Blame Ethan, he's working on it.
+
+
 ## Components
 ### Rubicon
 > "The die is cast."
