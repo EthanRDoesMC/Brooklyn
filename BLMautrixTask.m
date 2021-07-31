@@ -530,8 +530,8 @@ NSInteger requestID = 0;
     [request setValue:@"response" forKey:@"command"];
     IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
     CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
-    [conversation setLocalUserIsTyping:[@"data"][@"typing"]];
-    [thisChat setLocalUserIsTyping:command[@"data"][@"typing"]];
+    [conversation setLocalUserIsTyping:[command[@"data"][@"typing"] boolValue]];
+    [thisChat setLocalUserIsTyping:[command[@"data"][@"typing"] boolValue]];
     [self sendDictionary:request withID:command[@"id"]];
     NSLog(@"Typing indicator for:%@",thisChat);
 }
