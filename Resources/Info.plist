@@ -6,6 +6,8 @@
 	<string>Brooklyn</string>
 	<key>CFBundleIconName</key>
 	<string>BeeperAppIcon</string>
+	<key>CFBundleDisplayName</key>
+	<string>Brooklyn</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundlePrimaryIcon</key>
