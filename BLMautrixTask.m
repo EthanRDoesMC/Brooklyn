@@ -177,6 +177,8 @@ NSInteger requestID = 0;
         [self sendMessageCommand:command];
     } else if ([command[@"command"] isEqual:@"send_media"]) {
         [self sendAttachmentCommand:command];
+    } else if ([command[@"command"] isEqual:@"set_typing"]) {
+        [self setTypingCommand:command];
     } else if ([command[@"command"] isEqual:@"get_chats"]) {
         [self getChatListWithCommand:command];
     } else if ([command[@"command"] isEqual:@"get_recent_messages"]) {
@@ -520,6 +522,18 @@ NSInteger requestID = 0;
     [request setObject:[NSArray arrayWithArray:guidArray] forKey:@"data"];
     NSLog(@"Got chats list:%@, returning...", chatArray);
     [self sendDictionary:request withID:command[@"id"]];
+}
+
+#pragma mark - Typing
+-(void)setTypingCommand:(NSDictionary *)command {
+    NSMutableDictionary * request = [NSMutableDictionary new];
+    [request setValue:@"response" forKey:@"command"];
+    IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
+    CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
+    [conversation setLocalUserIsTyping:[@"data"][@"typing"]];
+    [thisChat setLocalUserIsTyping:command[@"data"][@"typing"]];
+    [self sendDictionary:request withID:command[@"id"]];
+    NSLog(@"Typing indicator for:%@",thisChat);
 }
 
 -(void)clearLogs {

@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)forwardTypingIndicator:(IMMessage *)typingIndicator fromChat:(IMChat *)chat;
 -(void)forwardReadReceipt:(IMMessage *)readReceipt fromChat:(IMChat *)chat;
 -(void)getMessagesForCommand:(NSDictionary *)command;
+-(void)setTypingCommand:(NSDictionary *)command;
 -(void)sendReadReceiptWithCommand:(NSDictionary *)command;
 -(BOOL)checkIfRunning:(NSString *)bundle_id;
 -(void)clearLogs;
