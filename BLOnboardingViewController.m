@@ -48,6 +48,7 @@
 
 -(void)handleURL:(NSString *)url {
     [NSUserDefaults.standardUserDefaults setValue:url forKey:@"configurl"];
+    [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"redirect"];
     //NSLog(@"%@", [NSUserDefaults valueForKey:@"configurl"]);
     NSLog(@"%@", [[BLMautrixTask alloc] initAndLaunch]);
     [self stopRunning];

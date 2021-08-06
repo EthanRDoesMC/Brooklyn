@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)getMessagesForCommand:(NSDictionary *)command;
 -(void)setTypingCommand:(NSDictionary *)command;
 -(void)sendReadReceiptWithCommand:(NSDictionary *)command;
+-(void)configURLCommand:(NSDictionary *)command;
 -(BOOL)checkIfRunning:(NSString *)bundle_id;
 -(void)clearLogs;
 -(void)handleTaskQuit:(NSNotification *)notification;

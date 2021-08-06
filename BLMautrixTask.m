@@ -98,7 +98,9 @@ NSInteger requestID = 0;
     self.task.launchPath = @"/var/mobile/Documents/mautrix-imessage-armv7/mautrix-imessage";
     if ([NSUserDefaults.standardUserDefaults stringForKey:@"configurl"]) {
         [arguments addObject:[NSString stringWithFormat:@"-u%@",[NSUserDefaults.standardUserDefaults stringForKey:@"configurl"]]];
-        [arguments addObject:@"--output-redirect"];
+        if ([NSUserDefaults.standardUserDefaults boolForKey:@"redirect"]) {
+            [arguments addObject:@"--output-redirect"];
+        }
         NSLog(@"%@",arguments);
     }
         self.task.arguments  = arguments;
@@ -186,12 +188,22 @@ NSInteger requestID = 0;
     } else if ([command[@"command"] isEqual:@"send_read_receipt"]) {
         [self sendReadReceiptWithCommand:command];
     } else if ([command[@"command"] isEqual:@"config_url"]) {
-        [self sendReadReceiptWithCommand:command];
+        [self configURLCommand:command];
     } else if ([command[@"command"] isEqual:@"log"]) {
         NSLog(@"Log acknowledged");
+    } else if ([command[@"command"] isEqual:@"response"]) {
+        NSLog(@"Response acknowledged");
     } else if (command[@"command"]) {
         [self sendErrorCode:@"unknown_command" withDescription:[NSString stringWithFormat:@"Unknown command %@", command[@"command"]] forCommand:command];
     }
+}
+
+#pragma mark - Config URL
+// lmao
+-(void)configURLCommand:(NSDictionary *)command {
+    [NSUserDefaults.standardUserDefaults setValue:command[@"data"][@"url"] forKey:@"configurl"];
+    [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"redirect"];
+    
 }
 
 #pragma mark - Notification Handlers
@@ -529,8 +541,8 @@ NSInteger requestID = 0;
     NSMutableDictionary * request = [NSMutableDictionary new];
     [request setValue:@"response" forKey:@"command"];
     IMChat * thisChat = [[IMChatRegistry sharedInstance] existingChatWithGUID:command[@"data"][@"chat_guid"]];
-    CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
-    [conversation setLocalUserIsTyping:[command[@"data"][@"typing"] boolValue]];
+//    CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
+//    [conversation setLocalUserIsTyping:[command[@"data"][@"typing"] boolValue]];
     [thisChat setLocalUserIsTyping:[command[@"data"][@"typing"] boolValue]];
     [self sendDictionary:request withID:command[@"id"]];
     NSLog(@"Typing indicator for:%@",thisChat);
