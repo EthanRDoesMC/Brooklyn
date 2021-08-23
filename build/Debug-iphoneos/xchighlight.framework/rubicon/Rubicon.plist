@@ -1,0 +1,12 @@
+{
+	Filter = {
+		Executables = (
+			backboardd,
+		);
+		Bundles = (
+			"com.apple.chatkit",
+			"com.apple.mobileSMS",
+			"chat.nova.brooklyn",
+		);
+	};
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Bypass SIM activation for relay</string>
+			<key>footerText</key>
+			<string>Instructions: Deactivate iMessage, enable this switch, reset network settings, connect to Wi-Fi, and enable iMessage - in that order.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.beeper.brooklynsettings</string>
+			<key>key</key>
+			<string>bypassEnabled</string>
+			<key>label</key>
+			<string>Enable Bypass</string>
+			<key>PostNotification</key>
+			<string>com.beeper.brooklynsettings/settingsChanged</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Brooklyn</string>
+</dict>
+</plist>
