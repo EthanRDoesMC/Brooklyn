@@ -1,6 +1,0 @@
-framework module xchighlight {
-  umbrella header "xchighlight.h"
-
-  export *
-  module * { export * }
-}
