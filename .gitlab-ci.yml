@@ -4,7 +4,7 @@ stages:
 
 build:
   tags:
-  - mac
+  - macos
   stage: build
   before_script:
   - export PACKAGE_VERSION=$(cat control | grep Version | awk '{ print $2 }')-$CI_PIPELINE_IID+$CI_COMMIT_REF_NAME
