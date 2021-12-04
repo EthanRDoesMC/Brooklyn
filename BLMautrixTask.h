@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * outputString;
 @property (strong, nonatomic) NSPipe * writePipe;
 @property (strong, nonatomic) NSMutableArray * sessionSentGUIDs;
-@property (strong, nonatomic) IMMessage * mostRecentMessage;
+@property (strong, nonatomic) NSString * mostRecentMessageGUID;
 @property (strong, nonatomic) CPDistributedMessagingCenter * messageCenter;
 +(id)sharedTask;
 -(id)initAndLaunch;

@@ -13,7 +13,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "CPDistributedMessagingCenter.h"
 
-
+#define MESSAGE_BACKLOG_SIZE_FOR_DEDUPLICATION 10
 
 @interface UIApplication (BLSMSHelper)
 -(BOOL)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)launchSuspended;
@@ -213,33 +213,40 @@ NSInteger requestID = 0;
 }
 
 -(void)analyzeNotification:(NSNotification *)notification {
-    NSLog(@"%@ / %@ / %@", notification.name, notification.object, notification.userInfo);
+    NSLog(@"Analyzed notification: %@ / %@ / %@", notification.name, notification.object, notification.userInfo);
 }
 
 -(void)handleExternal:(NSNotification *)notification {
     [self analyzeNotification:notification];
     IMMessage * thisMessage = notification.userInfo[@"__kIMChatValueKey"];
-    NSLog(@"%@", thisMessage);
+    NSLog(@"[handleExternal] IMMessage: %@", thisMessage);
     BOOL isDupe = false;
     
     if (thisMessage.isFromMe) {
-        if (self.mostRecentMessage) {
-            if (thisMessage == self.mostRecentMessage) {
+        NSLog(@"[handleExternal] Deduplication: %@ and %@", thisMessage, self.mostRecentMessageGUID);
+        if (self.mostRecentMessageGUID) {
+            if ([thisMessage.guid isEqualToString: self.mostRecentMessageGUID]) {
                 isDupe = true;
                 NSLog(@"%hhd", isDupe);
             }
         }
-        for (NSString * sentGUID in self.sessionSentGUIDs) {
-            if ([thisMessage.guid isEqualToString:sentGUID]) {
-                isDupe = true;
-                NSLog(@"%hhd", isDupe);
+        if (!isDupe) {
+            NSLog(@"[handleExternal] Comparing GUIDs: %@ and %@", thisMessage.guid, self.sessionSentGUIDs);
+            for (NSString * sentGUID in self.sessionSentGUIDs) {
+                if ([thisMessage.guid isEqualToString:sentGUID]) {
+                    isDupe = true;
+                    NSLog(@"%hhd", isDupe);
+                    NSLog(@"[handleExternal] Deduplication: MATCH between %@ and %@", thisMessage.guid, sentGUID);
+                } else {
+                    NSLog(@"[handleExternal] Deduplication: No match between %@ and %@", thisMessage.guid, sentGUID);
+                }
             }
         }
     }
     if (![thisMessage isFromMe]) {
         isDupe = true;
-        NSLog(@"typing message: %hhd", thisMessage.isTypingMessage);
-        NSLog(@"retract typing indc: %hhd", thisMessage.isFinished);
+        NSLog(@"[handleExternal] typing message: %hhd", thisMessage.isTypingMessage);
+        NSLog(@"[handleExternal] retract typing indc: %hhd", thisMessage.isFinished);
         if (thisMessage.isTypingMessage) {
             [self forwardTypingIndicator:thisMessage fromChat:notification.object];
         }
@@ -247,7 +254,7 @@ NSInteger requestID = 0;
     if (thisMessage.isRead) {
         [self forwardReadReceipt:thisMessage fromChat:notification.object];
     }
-    NSLog(@"%hhd", isDupe);
+    NSLog(@"[handleExternal] isDupe: %hhd", isDupe);
     if (isDupe == false) {
         [self forwardMessage:notification.userInfo[@"__kIMChatValueKey"] fromChat:notification.object];
     }
@@ -389,11 +396,15 @@ NSInteger requestID = 0;
     CKConversation * conversation = [[CKConversation alloc] initWithChat:thisChat];
     CKComposition * composition = [[CKComposition alloc] initWithText:[[NSAttributedString alloc] initWithString:command[@"data"][@"text"]] subject:nil];
     IMMessage * message = [conversation messageWithComposition:composition];
-    self.mostRecentMessage = message;
+    self.mostRecentMessageGUID = [message guid];
     [thisChat sendMessage:message];
     NSMutableDictionary * request = [NSMutableDictionary new];
     [datadict setValue:[message guid] forKey:@"guid"];
     [self.sessionSentGUIDs addObject:[message guid]];
+    // if we keep growing this array then comparisons for deduplication will take longer over time and we will have a memory leak, hence only keep a limited list of recent values
+    if (self.sessionSentGUIDs.count > MESSAGE_BACKLOG_SIZE_FOR_DEDUPLICATION) {
+        self.sessionSentGUIDs = [[self.sessionSentGUIDs subarrayWithRange:NSMakeRange(self.sessionSentGUIDs.count - MESSAGE_BACKLOG_SIZE_FOR_DEDUPLICATION, MESSAGE_BACKLOG_SIZE_FOR_DEDUPLICATION)] mutableCopy];
+    }
     [datadict setValue:[NSNumber numberWithDouble:[[message time] timeIntervalSince1970]] forKey:@"timestamp"];
     [request setValue:@"response" forKey:@"command"];
     [request setObject:[NSDictionary dictionaryWithDictionary:datadict] forKey:@"data"];
